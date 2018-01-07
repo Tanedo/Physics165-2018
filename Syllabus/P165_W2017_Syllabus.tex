@@ -1,0 +1,481 @@
+\documentclass[12pt]{article}
+%% arXiv paper template by Flip Tanedo
+%% last updated: Dec 2016
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  THE USUAL PACKAGES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{nopageno}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  UNUSUAL PACKAGES        %%%%
+%%%  Uncomment as necessary. %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% MATH AND PHYSICS SYMBOLS
+%% ------------------------
+%\usepackage{slashed}       % \slashed{k}
+%\usepackage{mathrsfs}      % Weinberg-esque letters
+%\usepackage{youngtab}	    % Young Tableaux
+%\usepackage{pifont}        % check marks
+%\usepackage{bbm}           % \mathbbm{1} incomp. w/ XeLaTeX 
+%\usepackage[normalem]{ulem} % for \sout
+
+
+%% CONTENT FORMAT AND DESIGN (below for general formatting)
+%% --------------------------------------------------------
+\usepackage{lipsum}        % block of text (formatting test)
+%\usepackage{color}         % \color{...}, colored text
+\usepackage{framed}        % boxed remarks
+%\usepackage{subcaption}    % subfigures; subfig depreciated
+%\usepackage{paralist}      % compactitem
+%\usepackage{appendix}      % subappendices
+%\usepackage{cite}          % group cites (conflict: collref)
+%\usepackage{tocloft}       % Table of Contents	
+
+%% TABLES IN LaTeX
+%% ---------------
+%\usepackage{booktabs}      % professional tables
+%\usepackage{nicefrac}      % fractions in tables,
+%\usepackage{multirow}      % multirow elements in a table
+%\usepackage{arydshln} 	    % dashed lines in arrays
+
+%% Other Packages and Notes
+%% ------------------------
+%\usepackage[font=small]{caption} % caption font is small
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  PAGE FORMATTING and (RE)NEW COMMANDS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[margin=2cm]{geometry}   % reasonable margins
+
+\graphicspath{{figures/}}	        % set directory for figures
+
+% for capitalized things
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}    
+
+\numberwithin{equation}{section}    % set equation numbering
+\renewcommand{\tilde}{\widetilde}   % tilde over characters
+\renewcommand{\vec}[1]{\mathbf{#1}} % vectors are boldface
+
+\newcommand{\dbar}{d\mkern-6mu\mathchar'26}    % for d/2pi
+\newcommand{\ket}[1]{\left|#1\right\rangle}    % <#1|
+\newcommand{\bra}[1]{\left\langle#1\right|}    % |#1>
+\newcommand{\Xmark}{\text{\sffamily X}}        % cross out
+
+% Change list spacing (instead of package paralist)
+% from: http://en.wikibooks.org/wiki/LaTeX/List_Structures#Line_spacing
+\let\oldenumerate\enumerate
+\renewcommand{\enumerate}{
+  \oldenumerate
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+
+% Commands for temporary comments
+\newcommand{\comment}[2]{\textcolor{red}{[\textbf{#1} #2]}}
+\newcommand{\flip}[1]{{\color{red} [\textbf{Flip}: {#1}]}}
+\newcommand{\email}[1]{\texttt{\href{mailto:#1}{#1}}}
+
+\newenvironment{institutions}[1][2em]{\begin{list}{}{\setlength\leftmargin{#1}\setlength\rightmargin{#1}}\item[]}{\end{list}}
+
+
+\usepackage{fancyhdr}		% to put preprint number
+
+
+
+% Commands for listings package
+%\usepackage{listings}      % \begin{lstlisting}, for code
+%
+% \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+%    sets style to small true-type
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  TIKZ COMMANDS FOR EXTERNAL DIAGRAMS  %%%%
+%%%  requires -shell-escape               %%%%
+%%%  in texpad 1.7: prefs > shell esc sec %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% This is for exporting tikz figures as into a ./tikz/ subfolder.
+%% It is useful if you want pdf versions of the tikz diagrams or
+%% if you need to speed up compilation of a large document with
+%% many tikz diagrams.
+
+%\write18{} % Careful with this!
+%\usetikzlibrary{external}
+%\tikzexternalize[prefix=tikz/] % folder for external pdfs
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%  HYPERREF  %%%%
+%%%%%%%%%%%%%%%%%%%
+
+%% This package has to be at the end; can lead to conflicts
+\usepackage{microtype}
+\usepackage[
+	colorlinks=true,
+	citecolor=black,
+	linkcolor=black,
+	urlcolor=green!50!black,
+	hypertexnames=false]{hyperref}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%  TITLE DATA  %%%%
+%%%%%%%%%%%%%%%%%%%%%
+
+%%% PREPRINT NUMBER USING fancyhdr
+%%% Don't forget to set \thispagestyle{firststyle}
+%%% ----------------------------------------------
+%\renewcommand{\headrulewidth}{0pt} % no separator
+%\fancypagestyle{firststyle}{
+%\rhead{\footnotesize \texttt{UCI-TR-2016-XX}}}
+
+
+
+\begin{document}
+
+%\thispagestyle{empty}
+%\thispagestyle{firststyle} %% to include preprint
+
+\begin{center}
+
+    {\Large \textsc{Physics 165:} \textbf{Introduction to Particle Physics}}
+    
+\end{center}
+
+\vskip .4cm
+
+\noindent
+\begin{tabular*}{\textwidth}{rlcrll}
+	\textsc{Instructor:}& Prof.~Flip Tanedo
+	&
+	\hspace{.5cm}
+	&
+	\textsc{Lecture:}& TR & 5:10 -- 6:30pm
+	\\
+	\textsc{Contact:}& \email{flip.tanedo@ucr.edu} 
+	&
+	\hfill
+	&
+	\textsc{Room:} & Physics & 2104
+	\\
+	\textsc{Office:}& Physics 3054
+	&
+	\hfill
+	&
+	\textsc{Final:}& S 3/17 & 7:00 -- 10:00pm
+	\\
+	\textsc{Office Hour:}& Monday 3:30pm -- 4:30pm
+	&
+	\hfill
+	&
+\\
+\\
+	\textsc{TA:}& Ian Chaffey
+	&
+	&
+	\textsc{Discussion:}& W & TBA
+	\\
+	\textsc{Contact:}& \email{ichaf001@ucr.edu} 
+	&
+	\hfill
+	&
+	\textsc{Room:} & Physics & 2104
+	\\
+	\textsc{Office:}& Physics 3005
+	&
+	\hfill
+	&
+	\\
+	\textsc{Office Hour:}& Monday 3:30pm -- 4:30pm
+	&
+	\hfill
+	&
+\end{tabular*}
+
+
+\vspace{1.5em}
+\noindent \textcolor{red}{\textbf{This syllabus is \emph{tentative} until the first day of class.}}
+
+\begin{framed}
+\noindent
+\textsc{Course webpage:} 
+%\url{http://physics.ucr.edu/~flip/teaching/p231_2017/}
+\emph{to be updated soon}
+
+\noindent Lecture notes and homework will be posted there. Grades will be posted on \texttt{iLearn}.	
+\end{framed}
+
+
+%\vspace{.5em}
+
+
+\section*{Official Course Description}
+
+\begin{quote}
+\textsc{4 Units\footnote{UCR Senate Regulation 760 defines one unit as 3 hours of course work per week. Each week, this class has 3 hours of lecture, 1 hour of discussion, and expects 8 hours of your own time.}, Lecture 3, Discussion 1}, Prerequisite(s): \acro{phys}~156A
+\\	Explores the classification of particles in terms of the Standard Model. Includes methods and techniques for particle acceleration and detection; conservation laws and symmetries; the basic interactions of particles (electromagnetic, strong, weak); and electroweak unification.
+	
+\end{quote}
+
+
+\section*{Unofficial (Effective) Course Description}
+
+This is a course is an introduction to  elementary particle physics, often referred to as high-energy physics. This is a study of the fundamental constituents of matter and the forces that dictate their quantum mechanical interactions. Our theory for this field is called the \textbf{Standard Model} and in this class we will understand its theoretical scaffolding, experimental discovery, and phenomenological consequences.
+
+\subsection*{Course goals}
+\begin{itemize}
+	\item \textsc{Theory:} understand the the Standard Model on the basis of Feynman diagrams, action principles, Green's functions, and symmetries. \emph{This course will help prepare you for graduate-level relativistic quantum mechanics by showing how the results of that theory are used in practice.}
+	\item \textsc{Monte Carlo:} use open-source tools to simulate high-energy colliders, analyze the resulting data and interpret the results. \emph{This course will prepare you to think about data in the context of open research-type questions.}
+	\item \textsc{Experiment:} understand the experiments that led to the construction and confirmation of the Standard Model, understand the principles of on-going and future experiments. \emph{This course will give context for how this field has grown in the past century and where we are going over the next decade.}
+	\item \textsc{Research:} develop research skills including critical reading of original literature and interpretation of experimental results. \emph{Anyone who does well in this course should be in a position to reap the most reward from an undergraduate research experience at \acro{CERN}.}
+\end{itemize}
+
+Some concrete physics goals of this class are:
+\begin{enumerate}
+	\item Be familiar natural units, relativistic kinematics.
+	\item Identify the matter and force particles of the Standard Model. Be familiar with their quantum numbers and the different bases in which these particles are most conveniently described.
+	\item Interpret this this theory in terms of Feynman diagrams.
+	\item Understand the quantum mechanical interpretation of Feynman diagrams.
+	\item Be able to calculate basic cross sections and decay rates. Understand how this generalizes. 
+	\item Understand the experimental foundations of the Standard Model including the principles of how high-energy colliders work.
+	\item Produce and interpret Monte Carlo data with \texttt{MadGraph}. 
+	\item Enumerate and understand the parameters of the Standard Model.
+	\item Understand spontaneous symmetry breaking and the Higgs mechanism.
+	\item Understand the hallmark phenomena of the Standard Model, including flavor transitions, CP-violation, the discovery of the Higgs boson, and massive gauge bosons.
+	\item Understand how invariance with respect to symmetry groups constrain the types of interactions in the Standard Model including how this is restricts terms in a Lagrangian. Relate this to the Feynman rules of a theory.
+	\item Distinguish between chirality and helicity, apply these ideas diagrammatically.
+	\item Understand the principle of naturalness; be able to articulate why physicists may expect new physics beyond the Standard Model at the TeV scale.
+	\item Be comfortable reading research papers about particle physics and interpreting plots. Know how to use the particle data booklet (and corresponding \acro{PDG} website).
+\end{enumerate}
+
+\subsection*{Course philosophy}
+
+This course is usually taught historically,  highlighting important experiments and a seemingly random hodge-podge of `undergrad-friendly' principles. This is because a proper from-first-principles treatment of the subject requires a mastery of quantum field theory (Physics 230AB). So instructors compromise and decide to teach an `appetizer' class to show what particle physics is \emph{like}, rather than what it \emph{is}. \textbf{I hate that}.
+
+
+This course will be unlike past offerings and unlike the analogous courses at other universities.
+%
+We ground our study in the construction and interpretation of \textbf{Feynman diagrams}. From this we will systematically construct the theory of the Standard Model based on symmetry principles. Rather than relying on quantum field theory to perform calculations, we will use the \texttt{MadGraph} Monte Carlo program to simulate high-energy colliders and will analyze the resulting data. This is a key skill in collider research.
+%
+Our approach is different and completely idiosyncratic, but it is a direct bridge to a real understanding of particle physics.
+
+
+
+\subsection*{Pre-requisites}
+
+You should be familiar with special relativity and the principles of quantum mechanics. If you have not completed the Physics 156 (quantum mechanics) sequence, I expect that you are taking 156B concurrently (co-requisite). While we won't strictly require much formalism from these courses, the intuition that you develop will make your life easier. 
+
+\textsc{Catching up:} If you need a refresher, I suggest reading \emph{Very Special Relativity} by Sander Bais. Read as much of Griffiths' \emph{Introduction to Quantum Mechanics} as you can. You should understand concepts like four-vectors, Lorentz transformations, superposition, creation operators for the harmonic oscillator, and eventually the hydrogen atom.
+
+\section*{Textbook and ACMI}
+
+You are not required to purchase any textbooks for this course. The primary reference will be the lectures, notes will be posted online.  We will be using the following resources that are provided to you free of charge:
+\begin{itemize}
+	\item The \emph{Particle Physics Booklet}, provided courtesy of the Particle Data Group. All contents (and more) are available free online, \url{http://pdg.lbl.gov}.
+	\item \emph{Introduction to Elementary Particle Phenomenology}, Philip Ratcliffe. Available online through the \acro{UCR} library.
+	\item Notes from Michael Peskin's Physics 152/252 course at Stanford, available online, \url{http://www.slac.stanford.edu/~mpeskin/Physics152/}
+\end{itemize}
+There will also be assigned readings from various primary and secondary sources; these will also be made available to students. 
+
+\begin{framed}
+\noindent This course is supported by a grant from the \acro{UCR} \textbf{Affordable Course Materials Initiative} (\acro{ACMI}). As per the conditions of the grant, student costs for required course readings will be \$0. 	
+\end{framed}
+
+There are some not-free textbooks that may be useful supplementary references. I list a few of them here if you prefer to do extra reading, though these are strictly extra reading:
+\begin{itemize}
+	\item \emph{Introduction to Elementary Particle Physics}, Griffiths. This is a solid introduction to some of the ideas of the Standard Model. The text is somewhat antiquated.
+%	\item \emph{A Modern Introduction to Particle Physics}, Fayyazuddin.
+	\item \emph{Modern particle physics}, Thompson.
+	\item \emph{Quarks and Leptons: an Introductory Course in Modern Particle Physics}, Halzen \& Martin. A bit more technical than our course, but in the same spirit.
+	\item \emph{Introduction to Elementary Particle Physics}, Bettini. Experimental foundations.
+	\item \emph{Particle Physics, a comprehensive introduction}. Seiden. A phenomenological approach that also builds up some practical quantum field theory.
+	\item \emph{Gauge Theories of the Strong, Weak, and Electromagnetic Interactions}, Quigg. % good references
+	\item \emph{The Experimental Foundations of Particle Physics}, Cahn and Goldhaber. This is a collection of reprints with commentary.
+\end{itemize}
+%% PLEASE REVIEW ALL OF THIS, some good stuff, e.g. problems, approaches. 
+
+If you are really drawn to the material and are considering pursuing particle physics, I suggest the following ancillary reading beyond this course:
+\begin{itemize}
+	\item \emph{QED: The Strange Theory of Light and Matter}, Feynman. Based on Feynman's Auckland lectures, this is a popular science book that seeks to build some of the formalism of field theory from the ground up. 
+	\item \emph{Inward Bound}, Pais. A historical investigation of the development of the Standard Model. 
+	\item \emph{Quantum Field Theory In a Nutshell}, Zee. This is a `real' quantum field theory textbook that's been written that is accessible to an undergraduate autodidact with a firm foundation in quantum mechanics. (The book \emph{Quantum Field Theory for the Gifted Amateur} may also be useful, though I've never read it.) 
+\end{itemize}
+
+\section*{Evaluation and course policies}
+
+You will be evaluated on the following criteria:
+\begin{itemize}
+	\item Weekly homework assignments. These will include Monte Carlo simulations. (35\%)
+	\item Brief in-class assessments. (20\%)
+	\item A mid-term oral presentation. (10\%)
+	\item In-class final exam: Saturday, March 17 at 7:00pm. (35\%)
+\end{itemize}
+Homework assignments may include extra credit components. 
+
+\vspace{1em}
+\noindent \textsc{Additional extra credit}: submit \LaTeX'd course notes each week, including insights from spontaneous in-class discussions and your own questions generated while thinking about the course. The amount of extra credit will be commensurate with the quality of the notes.
+
+\vspace{1em}
+\noindent I expect you to work together and to abide by the \href{http://conduct.ucr.edu/policies/academicintegrity.html}{UCR academic integrity policies}.
+
+\subsection*{Policies}
+
+Part of your grade is be based on in-class participation. You responsible for the material that you miss if you are absent. For advance notice and valid emergencies, we can arrange to make up in-class work. 
+
+I strongly suggest that you form study groups and work with one another to complete the homework. You are responsible for writing up your own homework independently, but should feel free to discuss techniques with one another. 
+
+
+\section*{Topics}
+
+We will develop the Standard Model from two tracks.
+\vspace{1em} 
+
+\noindent
+\begin{tabular}{llll}
+	{Week}
+	&
+	\textbf{Feynman Diagrams} 
+	& \hspace{1cm} &
+	\textbf{Theory and phenomenology}
+	\\
+	\hline
+	1
+	&
+	Feynman Rules and \acro{QED}
+	&&
+	Special relativity and kinematics
+	\\
+	&
+	Variants of \acro{QED}: $Z$, $\mu$, $\nu$
+	&&
+	Amplitudes and quantum mechanics
+	\\
+	\hline
+	2
+	&
+	Broken electroweak: $W^\pm$
+	&&
+	Harmonic oscillator
+	\\
+	&
+	Flavor
+	&&
+	Harmonic oscillator field theory
+	\\
+	\hline
+	3
+	&
+	Quarks and gluons
+	&&
+	Quantum field theory, Green's functions
+	\\
+	&
+	Confinement
+	&&
+	Parton distribution functions
+	\\
+	\hline
+	4
+	&
+	The Higgs
+	&&
+	Discrete symmetries
+	\\
+	&
+	Chirality
+	&&
+	SU(2)
+	\\
+	\hline
+	5
+	&
+	Electroweak theory
+	&&
+	Tensors and invariants
+	\\
+	&
+	
+	&&
+	Lagrangians
+	\\
+	\hline
+	6
+	&
+	The Standard Model
+	&&
+	Parameters of the Standard Model
+	\\
+	&
+	Degrees of freedom
+	&&
+	Gauge invariance
+	\\
+	\hline
+	7
+	&
+	Loop-level processes
+	&&
+	Colliders and detectors
+	\\
+	&
+	Rare decays
+	&&
+	\\
+	\hline
+	8
+	&
+	Breakdown of effective theories
+	&&
+	Renormalization
+%	\\
+%	&
+%	Rare decays
+%	&&	
+\end{tabular}
+\vspace{1em}
+\noindent 
+
+\noindent Remaining weeks will be used as overflow and to accommodate special topics according to the interests of the group. These may include dark matter, early universe particle physics, theories of new physics, and future experiemnts.
+
+
+
+
+\section*{Teaching Philosophy}
+
+\begin{itemize}
+	\item \textbf{Learn by doing}. We solve problems collaboratively.
+	\item \textbf{Nonlinear assessment}. In addition to ordinary homework due every week, we will have `quick' 2-day mini-assignments on Tuesday that are due on Thursday. These will be primarily to review calculations that we do in class and to prepare for the next lecture.
+	\item \textbf{Two-way feedback}. The purpose of `in vivo' assessment is to make sure both the instructor and the students are aware which topics require more attention.
+\end{itemize}
+
+\noindent The course methodology may be somewhat different from what you are used to in upper division courses. My goal is that you will understand the Standard Model at the level of an experienced researcher.
+
+
+\end{document}
