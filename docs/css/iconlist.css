@@ -1,0 +1,37 @@
+/* FOR ICON LISTS */
+/*https://stackoverflow.com/questions/34667466/how-to-center-this-horizontal-list-of-images*/
+/*better: https://stackoverflow.com/questions/19645931/inline-images-with-captions-centered-under-each*/
+.ul-iconlist{
+  font-family: 'Raleway', sans-serif;
+  color: #AAAAAA;
+}
+
+.ul-iconlist:after {
+  content: attr(title);
+  display: block;
+  text-align: center;
+}
+
+.ul-iconlist ul {
+  text-align: center;
+  padding: 0;
+}
+
+.ul-iconlist li {
+  width: 25%;
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: .75rem;
+}
+
+.ul-iconlist li img {
+  max-width: 80%;
+  height: auto;
+}
+
+.flipicon{
+  border-radius: 10px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 100%;
+}
