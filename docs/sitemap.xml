@@ -5,7 +5,7 @@
     
     <url>
     
-      <loc>/categories/</loc>
+      <loc>https://tanedo.github.io/Physics165-2018/categories/</loc>
       <priority>0</priority>
     </url>
     
@@ -14,7 +14,7 @@
     
     <url>
     
-      <loc>/publication_types/</loc>
+      <loc>https://tanedo.github.io/Physics165-2018/publication_types/</loc>
       <priority>0</priority>
     </url>
     
@@ -23,7 +23,7 @@
     
     <url>
     
-      <loc>/tags/</loc>
+      <loc>https://tanedo.github.io/Physics165-2018/tags/</loc>
       <priority>0</priority>
     </url>
     
@@ -32,7 +32,7 @@
     
     <url>
     
-      <loc>/</loc>
+      <loc>https://tanedo.github.io/Physics165-2018/</loc>
       <lastmod>2017-10-15T00:00:00-07:00</lastmod>
       <priority>0</priority>
     </url>
