@@ -1,0 +1,200 @@
+\documentclass[12pt]{article}
+%% arXiv paper template by Flip Tanedo
+%% last updated: Dec 2016
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  THE USUAL PACKAGES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{nopageno}
+\usepackage{enumerate}
+\usepackage{parskip}
+
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  PAGE FORMATTING and (RE)NEW COMMANDS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[margin=2cm]{geometry}   % reasonable margins
+
+\graphicspath{{figures/}}	        % set directory for figures
+
+% for capitalized things
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}    
+
+\numberwithin{equation}{section}    % set equation numbering
+\renewcommand{\tilde}{\widetilde}   % tilde over characters
+\renewcommand{\vec}[1]{\mathbf{#1}} % vectors are boldface
+
+\newcommand{\dbar}{d\mkern-6mu\mathchar'26}    % for d/2pi
+\newcommand{\ket}[1]{\left|#1\right\rangle}    % <#1|
+\newcommand{\bra}[1]{\left\langle#1\right|}    % |#1>
+\newcommand{\Xmark}{\text{\sffamily X}}        % cross out
+
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+
+% Commands for temporary comments
+\newcommand{\comment}[2]{\textcolor{red}{[\textbf{#1} #2]}}
+\newcommand{\flip}[1]{{\color{red} [\textbf{Flip}: {#1}]}}
+\newcommand{\email}[1]{\texttt{\href{mailto:#1}{#1}}}
+
+\newenvironment{institutions}[1][2em]{\begin{list}{}{\setlength\leftmargin{#1}\setlength\rightmargin{#1}}\item[]}{\end{list}}
+
+
+\usepackage{fancyhdr}		% to put preprint number
+
+
+
+% Commands for listings package
+%\usepackage{listings}      % \begin{lstlisting}, for code
+%
+% \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+%    sets style to small true-type
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%  HYPERREF  %%%%
+%%%%%%%%%%%%%%%%%%%
+
+%% This package has to be at the end; can lead to conflicts
+\usepackage{microtype}
+\usepackage[
+	colorlinks=true,
+	citecolor=black,
+	linkcolor=black,
+	urlcolor=green!50!black,
+	hypertexnames=false]{hyperref}
+
+
+
+
+
+\begin{document}
+
+
+\begin{center}
+
+    {\Large \textsc{Weekly HW 1}:
+    \textbf{Kinematics and QED}}
+    
+\end{center}
+
+\vskip .4cm
+
+\noindent
+\begin{tabular*}{\textwidth}{rl}
+	\textsc{Course:}& Physics 165, \emph{Introduction to Particle Physics} (2018)
+	\\
+	\textsc{Instructor:}& Prof. Flip Tanedo (\email{flip.tanedo@ucr.edu})
+	\\
+	\textsc{Due by:}& {Tuesday}, January 16
+\end{tabular*}
+
+\noindent
+This is the main weekly homework set. Unless otherwise stated, give all responses in natural units where $c = \hbar = 1$ and energy is measured in electron volts (usually MeV or GeV). 
+
+\subsection{Everything in natural units}
+
+Write the following quantities in natural units with energy measured in GeV. You may write everything to one significant figure.
+
+\begin{itemize}
+	\item The mass of the sun, $M_\odot$.
+	\item The present day Hubble expansion rate, $H_0$. 
+	\item The classical electron radius, $r_e$. 
+	\item The Schwarszchild radius of the sun, $2G_N M_\odot/c^2$.
+\end{itemize}
+
+You may look up the information anywhere you want, but I suggest the first few pages of the PDG. 
+
+\subsection{Special Relativity and Kinematics}
+
+\subsubsection{A relativistic electron}
+
+In some frame, the electron has \emph{momentum} equivalent to its rest mass, $m_e$. Use the value of the rest mass to one significant figure. I shouldn't have to tell you where to look it up. Write out the components of the \textbf{momentum four-vector} $p_\mu$. 
+
+\subsubsection{A symmetric particle collider}
+
+Imagine a symmetric electron--positron collider. At the collision point, it collides a beam of electrons and positrons with one another so that these have four-momenta:
+\begin{align}
+	p_\mu^{e^-} &= (E,0,0,p)
+	&
+	\text{and}
+	&&
+	p_\mu^{e^+} &= (E,0,0,-p) \ .
+\end{align}
+What is the expression for $p$ as a function of $E$ and $m_e$? What is the \textbf{center of mass energy} of the collision in the lab frame?
+
+Suppose that this collider was invented to produce a 91~GeV particle, $Z$, through the process $e^+ e^- \to Z$. What energy $E$ is required for each beam? What is the momentum of the $Z$ particle in the lab frame?
+
+\textbf{Extra credit}: Suppose the $Z$ is unstable and decays. This means that you don't get to measure it directly. Without knowing anything else about how the $Z$ interacts, what is one \textbf{decay mode} that is guaranteed to exist? In other words, what types of particles should you make sure you can detect? 
+
+\subsubsection{A fixed target experiment}
+
+
+Imagine a very asymmetric kind of collider called a \textbf{fixed target experiment}: a high-energy beam of particles hits a stationary target. Assume that both the beam and the target are composed of protons and that the collision occurs head-on\footnote{This is a classical idea, but for now we can live with this kind of deceit. Relevant: \url{https://www.youtube.com/watch?v=AnaQXJmpwM4}}. Write the four-momenta of a beam particle and the target particle in the lab frame. 
+
+Suppose you wanted to produce some completely made up particle---let's call it a \emph{Flippon}\footnote{Unrelated to this: \url{https://arxiv.org/abs/1602.01377}}---that has a mass of 14 GeV. To one significant figure, what proton beam energy $E$ is required to produce the Flippon through $pp \to \text{Flippon}$? (Assume that such a process is possible.) What is the momentum of the Flippon in the lab frame?
+
+\textsc{Hint}: This problem is constrained by kinematics. There's an easy way and a hard way of doing this. One involves doing a Lorentz transformation to a more convenient frame. The other involves realizing that the quantity in the convenient frame can be written as a Lorentz invariant. I don't care which way you do this, though you should probably to understand how to do it both ways. 
+
+\textsc{Discussion}: Fixed target experiments are nice because you don't have to worry about engineering two beams to collide with one another. They also have a very useful feature that the new particle is produced \emph{boosted} relative to the lab frame. This can be very useful for untangling the decay products of the new particle from other  particle debris from the beam hitting the target.
+
+
+%\subsubsection{Lorentz Transformations}
+%
+%What is the relativistic boost factor $\gamma$ of an electron that has been boosted to $E = 1$ GeV? What is the velocity of such an electron? Write out the boost matrix that transforms from the particle's rest frame to the frame where it has $E= 1$ GeV.
+%
+%\textsc{Hint}: If only there were some reference material in the back of some booklet that had a review of kinematics. 
+
+
+
+
+
+\subsection{Stability of the electron}
+
+Draw the Feynman diagram for the process $e^- \to e^- \gamma$. Based on this, I foolishly propose that a 1~GeV electron can `decay' into a lower-energy electron and a photon. Prove that this is impossible kinematically. 
+
+\textsc{Hint}: There's an easy way and a hard way of doing this. They both involve conservation of energy and momentum. I don't care which way you do this.
+
+
+\subsection{Feedback}
+
+Approximately how long did it take you to complete the non-extra credit parts of this assignment?
+
+
+\section{Extra Credit}
+
+If you do any of these problems, please write a short note giving your thoughts on the reading: did you like them? Were they too simple / difficult? I do not expect you to be able to complete all (or necessarily any) of the extra credit.
+
+\subsection{Minkowski Diagrams}
+
+The mathematical basis of relativity is geometry. This is most simply seen in what are called \textbf{Minkowski diagrams}. I'm pretty sure  A good introduction to these are in \url{https://arxiv.org/abs/1508.01968} by Boxiang Liu and Thushara Perera\footnote{A somewhat more polished reference is the book \emph{Very Special Relativity} by Sander Bais. There's also a Khan Academy video, \url{https://youtu.be/nEqexIckVCM}.}. Consider two reference frames with some non-zero relative velocity. Sketch the axes of the Minkowski diagram this system: that is, draw the $(x,t)$ axes and the $(x',t')$ axis where $(x',t')$ are related to $(x,t)$ by a Lorentz transformation.  Draw two spacetime events and their respective light cones. Comment on the idea of causality using these diagrams. Those who are mathematically inclined may enjoy \url{https://doi.org/10.1119/1.4997027}. 
+
+\subsection{Impact of Special Relativity on Physics: Compton Scattering}
+
+Look over David Jackson's article ``The Impact of Special Relativity on Theoretical Physics'' from the May 1987 issue of \emph{Physics Today}, \url{https://doi.org/10.1063/1.881108}. Focus on the section ``Waves and particles,'' where the author discusses \textbf{Compton scattering}. You drew the Feynman diagrams for this on your short homework assignment \#1. Use special relativity to derive the author's expression for $\delta\lambda$, the shift in the photon wavelength.
+
+\subsection{Relativistic mass}
+
+There is an antiquated notion of \emph{relativistic mass} that people used to talk about. Lev Okun gives a nice overview in ``The Concept of Mass'' in the June 1989 issue of \emph{Physics Today}, \url{https://doi.org/10.1063/1.881171}. Read the article and explain why there is only \emph{one} useful notion of mass and that it is the \emph{rest mass}.
+
+
+\end{document}
