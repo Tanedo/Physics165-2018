@@ -1,0 +1,1431 @@
+%% LaTeX Paper Template, Flip Tanedo (flip.tanedo@ucr.edu)
+%% last updated: Dec 2016
+
+\documentclass[12pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  COMMON PACKAGES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}	
+%\usepackage{amsthm}				
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  UNUSUAL PACKAGES        %%%%
+%%%  Uncomment as necessary. %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% MATH AND PHYSICS SYMBOLS
+%% ------------------------
+%\usepackage{slashed}       % \slashed{k}
+%\usepackage{mathrsfs}      % Weinberg-esque letters
+%\usepackage{youngtab}	    % Young Tableaux
+%\usepackage{pifont}        % check marks
+\usepackage{bbm}           % \mathbbm{1} incomp. w/ XeLaTeX 
+%\usepackage[normalem]{ulem} % for \sout
+%\usepackage{cancel}
+
+%% CONTENT FORMAT AND DESIGN
+%% -------------------------
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fancyhdr}		% to put preprint number
+\usepackage{lipsum}         % block of text (formatting test)
+\usepackage{framed}        % boxed remarks
+%\usepackage{subcaption}    % subfigures; subfig depreciated
+%\usepackage{paralist}      % compactitem
+%\usepackage{appendix}      % subappendices
+%\usepackage{cite}          % group cites (conflict: collref)
+%\usepackage{tocloft}       % Table of Contents	
+%\usepackage{xspace}			% spacing after macros
+%\usepackage{listings}      % \begin{lstlisting}, for code
+%	\lstset{
+%		basicstyle=\ttfamily\footnotesize,
+%		breaklines=true,
+%		backgroundcolor=\color{gray!15!white}}
+
+
+%% TABLES IN LaTeX
+%% ---------------
+\usepackage{booktabs}      % professional tables
+\usepackage{nicefrac}      % fractions in tables,
+\usepackage{multirow}      % multirow elements in a table
+\usepackage{arydshln} 	    % dashed lines in arrays
+
+%% Other Packages and Notes
+%% ------------------------
+\usepackage[font=small]{caption} % caption font is small
+\usepackage{float}         % for strict placement e.g. [H]
+
+%% BIBLATEX
+%% Not supported by arXiv
+%% ----------------------
+%\usepackage[
+%%style=alphabetic,
+%sorting=none,
+%style=numeric,
+%sortcites=true,
+%%autopunct=true,
+%%babel=hyphen,
+%hyperref=true,
+%%abbreviate=false,
+%%bibstyle=utphys,
+%backref=false]{biblatex}
+%\defbibheading{bibempty}{}  
+
+
+%% CUSTOM PACKAGES
+%% ---------------
+%\usepackage{tikzfeynman}   % Flip's rules Feynman Diagrams
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  DOCUMENT PROPERTIES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[margin=2cm]{geometry}   % margins
+\graphicspath{{figures/}}			% figure folder
+\numberwithin{equation}{section}    % set equation numbering
+
+
+%% References in two columns, smaller
+%% http://tex.stackexchange.com/questions/20758/bibliography-in-two-columns-section-title-in-one
+\usepackage{multicol}
+\usepackage{etoolbox}
+\usepackage{relsize}
+\patchcmd{\thebibliography}
+  {\list}
+  {\begin{multicols}{2}\smaller\list}
+  {}
+  {}
+\appto{\endthebibliography}{\end{multicols}}
+%
+%% Alternative (one column, modify spacing)
+%% https://wiki.math.cmu.edu/iki/wiki/tips/20140712-bibtex-spacing.html
+
+
+
+% Change list spacing (instead of package paralist)
+% from: http://en.wikibooks.org/wiki/LaTeX/List_Structures#Line_spacing
+\let\oldenumerate\enumerate
+\renewcommand{\enumerate}{
+  \oldenumerate
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  (RE)NEW COMMANDS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% FOR `NOT SHOUTING' CAPS (e.g. acronyms)
+%% ---------------------------------------
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}    
+
+%% COMMON PHYSICS MACROS
+%% ---------------------
+\renewcommand{\tilde}{\widetilde}   % tilde over characters
+\renewcommand{\vec}[1]{\mathbf{#1}} % vectors are boldface
+\newcommand{\dbar}{d\mkern-6mu\mathchar'26}    % for d/2pi
+\newcommand{\ket}[1]{\left|#1\right\rangle}    % <#1|
+\newcommand{\bra}[1]{\left\langle#1\right|}    % |#1>
+\newcommand{\Xmark}{\text{\sffamily X}}        % cross out
+
+%% COMMANDS FOR TEMPORARY COMMENTS
+%% -------------------------------
+\newcommand{\comment}[2]{\textcolor{red}{[\textbf{#1} #2]}}
+\newcommand{\flip}[1]{{
+	\color{green!50!black} \footnotesize [\textbf{\textsf{Flip}}: \textsf{#1}]
+	}}
+
+
+%% COMMANDS FOR TOP-MATTER
+%% -----------------------
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+\newenvironment{institutions}[1][2em]{\begin{list}{}{\setlength\leftmargin{#1}\setlength\rightmargin{#1}}\item[]}{\end{list}}
+
+
+%% COMMANDS FOR LATEXDIFF
+%% ----------------------
+%% see http://bit.ly/1M74uwc
+\providecommand{\DIFadd}[1]{{\protect\color{blue}#1}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\protect\scriptsize{#1}}}
+
+%% REMARK: use latexdiff option --allow-spaces
+%% for \frac, ref: http://bit.ly/1iFlujR
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  TIKZ COMMANDS FOR EXTERNAL DIAGRAMS  %%%%
+%%%  requires -shell-escape               %%%%
+%%%  in texpad 1.7: prefs > shell esc sec %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% For exporting tikz figures as into a ./tikz/ subfolder.
+%% It is useful if you want pdf versions of the tikz diagrams or
+%% if you need to speed up compilation of a large document with
+%% many tikz diagrams.
+
+%\write18{} % Careful with this!
+%\usetikzlibrary{external}
+%\tikzexternalize[prefix=tikz/] % folder for external pdfs
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%  HYPERREF  %%%%
+%%%%%%%%%%%%%%%%%%%
+
+%% This package has to be at the end; can lead to conflicts
+
+\usepackage[
+	colorlinks=true,
+	citecolor=green!50!black,
+	linkcolor=NavyBlue!75!black,
+	urlcolor=green!50!black,
+	hypertexnames=false]{hyperref}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%  TITLE DATA  %%%%
+%%%%%%%%%%%%%%%%%%%%%
+
+%% PREPRINT NUMBER USING fancyhdr
+%% Don't forget to set \thispagestyle{firststyle}
+%% ----------------------------------------------
+\renewcommand{\headrulewidth}{0pt} 	% no separator
+\setlength{\headheight}{15pt} 		% min to avoid fancyhdr warning
+\fancypagestyle{firststyle}{
+	\rhead{\footnotesize%
+%	\texttt{UCI-TR-2016-XX}\\ %% Uncomment for additional preprint #s
+	\texttt{UCR-TR-2017-FLIP-00X}%
+	}}
+
+%% TOC overwrites fancyhdr, here's a fix
+%% http://tex.stackexchange.com/questions/167828/difficult-with-fancyhdr-and-table-of-contents
+\usepackage{etoc}
+\renewcommand{\etocaftertitlehook}{\pagestyle{plain}}
+\renewcommand{\etocaftertochook}{\thispagestyle{firststyle}}
+
+
+
+\begin{document}
+
+%\thispagestyle{empty}		% default if no preprint #
+\thispagestyle{firststyle} 	% to include preprint
+
+\begin{center}
+
+    {\huge \bf Spacetime Representations of Particles}
+
+    \vskip .7cm
+
+%% SINGLE AUTHOR FORMAT
+%% --------------------
+	\textbf{Flip Tanedo} \\
+	\texttt{\footnotesize \email{flip.tanedo@ucr.edu}}
+
+	\vspace{-1em}
+    \begin{institutions}[2.25cm]
+    \footnotesize
+    {\it 
+	    Department of Physics \& Astronomy, 
+	    University of  California, Riverside, 
+	    {CA} 92521	    
+	    }    
+    \end{institutions}
+
+
+%% MULTIPLE AUTHOR FORMAT
+%% --------------------
+%    { \bf 
+%    	Philip Tanedo$^{a}$
+%    	and 
+%    	Another Author$^{b}$ 
+%    	} 
+%    \\ 
+%    \vspace{-.2em}
+%    { \tt \footnotesize
+%	    \email{flip.tanedo@ucr.edu},
+%	    \email{another.author@university.edu}
+%    }
+%	
+%    \vspace{-.2cm}
+%
+%    \begin{institutions}[2.25cm]
+%    \footnotesize
+%    $^{a}$ 
+%    {\it 
+%	    Department of Physics \& Astronomy, 
+%	    University of  California, Riverside, 
+%	    {CA} 92521	    
+%	    }    
+%	\\ 
+%	\vspace*{0.05cm}   
+%	$^{b}$ 
+%	{\it 
+%        Department of Physics, 
+%        University, 
+%        University Town, CA 90210
+%        }
+%    \end{institutions}
+
+\end{center}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%  ABSTRACT    %%%%
+%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+\noindent 
+Non-examinable notes on the representation theory of particles for Physics 165. Cobbled together from old notes. 
+\end{abstract}
+
+
+
+\small
+\setcounter{tocdepth}{2}
+\tableofcontents
+\normalsize
+%\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%  THE MEAT    %%%%
+%%%%%%%%%%%%%%%%%%%%%
+
+%% Use \input if you have separate files.
+%% \include is `smarter' (creates separate aux files
+%% for each tex file) and hence more efficient, 
+%% but it automatically puts a page break
+%% between included files. Input doesn't do this.
+
+
+
+\section{The Poincare Algebra}
+\label{sec:Poincare:Algebra}
+% 
+We briefly review the Poincare group and its spinor representations. 
+%
+Readers are encouraged to do peruse more thorough literature on this topic. Excellent references include section 2 of Weinberg, Vol. I \cite{weinberg}, Section 1 of Buchbinder and Kuzenko \cite{Buchbinder:1998qv}, Section 5 of Gutowski \cite{gutowski}, Section 4 of Osborn \cite{Osborn:Symmetries}, and Section 10 of Jones \cite{JonesGroups}. 
+
+
+\section{The Poincare group and its properties}
+
+The \textbf{Poincare group} describes the symmetries of Minkowski space and is composed of transformations of the form
+\begin{align}
+	x^\mu &\rightarrow x'^\mu = \Lambda^\mu_{\phantom{\mu}\nu} x^\nu + a^\mu,
+\end{align}
+where $a^\mu$ parameterizes translations and $\Lambda^\mu_{\phantom{\mu}\nu}$ parameterizes transformations of the Lorentz group \index{Lorentz group} containing rotations and boosts. 
+%
+We can write elements of the Poincare group as $\{(\Lambda,a)\}$. A pure Lorentz transformation is thus $(\Lambda,0)$ while a pure translation is $(\mathbbm{1},a)$. 
+%
+Elements are multiplied according to the rule
+\begin{align}
+	(\Lambda_2, a_2) \cdot (\Lambda_1, a_1) 
+	&= (\Lambda_2\Lambda_1,\,\Lambda_2 a_1 + a_2.) \ .
+	\label{eq:SUSYalg:Poincare:multiplication}
+\end{align}
+%
+Note that these transformations \textit{do not commute},
+\begin{align}
+	(\Lambda,0)\cdot (\mathbbm{1},a) &= (\Lambda,\Lambda a)\\
+	(\mathbbm{1},a)\cdot(\Lambda,0) &= (\Lambda,a).
+\end{align}
+Thus the Poincare group is \textit{not} a direct product of the Lorentz group and the group of 4-translations. The technical term for the relation between these groups is that the Poincare group is a \textbf{semi-direct product} of the Lorentz and 4-translation groups.
+
+Locally the Poincare group is represented by the algebra
+\begin{align}
+	[M^{\mu\nu},M^{\rho\sigma}] &= i(M^{\mu\sigma}\eta^{\nu\rho}+ M^{\nu\rho}\eta^{\mu\sigma} - M^{\mu\rho}\eta^{\nu\sigma} - M^{\nu\sigma}\eta^{\mu\rho})\label{eq:SUSYalg:Poincare:alg:1}\\
+	[P^\mu,P^\nu] &= 0\label{eq:SUSYalg:Poincare:alg:2}\\
+	[M^{\mu\nu}, P^\sigma] &= i(P^\mu\eta^{\nu\sigma}-P^\nu\eta^{\mu\sigma}).\label{eq:SUSYalg:Poincare:alg:3}
+\end{align}
+The $\mathbf{M}$ are the antisymmetric generators of the Lorentz group,
+\begin{align}
+(M^{\mu\nu})_{\rho\sigma}&=i(\delta^\mu_\rho\delta^\nu_\sigma-\delta^\mu_\sigma\delta^\nu_\rho),\label{eq:SUSYalg:LorentzGenerators}
+\end{align}
+and the $\mathbf P$ are the generators of translations. We will derive the form of the Lorentz generators below. As a `sanity check,' one should be able to recognize in  (\ref{eq:SUSYalg:Poincare:alg:1}) the usual $O(3)$ Euclidean symmetry  by taking $\mu,\nu,\rho,\sigma \in \{1,2,3\}$ and noting that at most only one term on the right-hand side survives. One may check that this coincides with the algebra for angular momenta, $\mathbf J$.  Equation (\ref{eq:SUSYalg:Poincare:alg:2}) says that translations commute, while  (\ref{eq:SUSYalg:Poincare:alg:3}) says that the generators of translations transform as vectors under the Lorentz group. This is, of course, expected since the generators of translations are precisely the four-momenta. The factors of $i$ should also be clear since we're taking the generators $\mathbf{P}$ and $\mathbf{M}$ to be Hermitian. 
+
+One can represent this algebra in matrix form as
+\begin{align}
+	\left(
+	\begin{array}{cc:c}
+	\multicolumn{2}{c:}{\multirow{2}{*}{\Large{$M$}}} & \multicolumn{1}{c}{\multirow{2}{*}{\Large{$P$}}} \\
+	 &&  \\
+	\hdashline
+	0 & 0 & 1
+	\end{array}
+	\right).
+\end{align}
+One can check explicitly this reproduces the algebra in (\ref{eq:SUSYalg:Poincare:alg:1}--\ref{eq:SUSYalg:Poincare:alg:3}) and the multiplication law (\ref{eq:SUSYalg:Poincare:multiplication}).
+%
+The `translation' part of the Poincare algebra is boring and requires no further elucidation. It is the Lorentz algebra that yields the interesting features of our fields under Poincare transformations.
+
+\section{The Lorentz Group}
+
+Let us now explore the \textbf{Lorentz group}\index{Lorentz group}, which is sometimes called the \textbf{homogeneous Lorentz group}\index{Lorentz group!homogeneous} to disambiguate it from the Poincare group which is sometimes called the \textbf{inhomogeneous Lorentz group}\index{Lorentz group!inhomogeneous|see{Poincare group}}.
+
+The Lorentz group is composed of the transformations that preserve the inner product on Minkowski space, $\langle x^\mu,x^\nu\rangle = x^\mu \eta_{\mu\nu}x^\nu = x^\mu x_\mu$. In particular, for $x^\mu \rightarrow x'^\mu = \Lambda^{\mu}_{\phantom\mu\nu}x^\nu$, we have
+\begin{align}
+	\left(\Lambda^\mu_{\phantom\mu\rho}x^\rho\right) \eta_{\mu\nu} \left(\Lambda^{\nu}_{\phantom\nu\sigma}x^\sigma\right) &= x^\rho \eta_{\rho\sigma}x^\sigma.
+\end{align}
+From this we may deduce that the fundamental transformations of the Lorentz group satisfy the relation
+\begin{align}
+		\Lambda^\mu_{\phantom\mu\rho}\, \eta_{\mu\nu}\, \Lambda^{\nu}_{\phantom\nu\sigma} &= \eta_{\rho\sigma},\label{eq:SUSYalg:lorentzgroup:indices}
+\end{align}
+or in matrix notation,
+\begin{align}
+	\mathbf{\Lambda^T\eta\Lambda} &= \eta,\label{eq:SUSYalg:lorentzgroup}
+\end{align}
+where $\eta = \text{diag}(+,-,-,-)$ is the usual Minkowski metric used by particle physicists\footnote{If you are a particle physicist born after 1980 and you write papers using a different metric, then I hate you.}.
+
+
+\subsection{Generators of the Lorentz Group}
+
+Let's spell out the procedure for determining the generators of the Lorentz group. We will later follow an analogous procedure to determine the generators of supersymmetry. We start by writing out any [finite] Lorentz transformation as the exponentiation
+\begin{align}
+	\mathbf{\Lambda} &= e^{i t \mathbf{W}},\label{eq:SUSYalg:lorentz:exp}
+\end{align}
+where $t$ is a transformation parameter and $\mathbf{W}$ is the generator we'd like to determine. We stick with the convention that generators of unitary representations  should be Hermitian. 
+%
+Clever readers will question whether it is true that \textit{all} Lorentz transformations can be written as the exponentiation of a generator at the identity. This is true for the cases of physical interest, where we only deal with the part of the subgroup which is connected to the identity. We will discuss the disconnected parts shortly.
+
+
+Plugging (\ref{eq:SUSYalg:lorentz:exp}) into  (\ref{eq:SUSYalg:lorentzgroup}) and setting $t=0$, we obtain the relation
+\begin{align}
+	\mathbf{\eta} \mathbf{W} + \mathbf{W}^T \mathbf{\eta} &= 0,
+\end{align}
+or with explicit indices,
+\begin{align}
+	\eta_{\mu\rho}W^\rho_{\phantom\rho\nu} + W^\rho_{\phantom\rho\mu}\eta_{\rho\nu} &=0\\
+	W_{\mu\nu} + W_{\nu\mu} &= 0.
+\end{align}
+Thus the generators $\mathbf{W}$ are $4\times 4$ antisymmetric matrices characterized by six real transformation parameters so that there are six generators. Let us thus write the exponent of the finite transformation (\ref{eq:SUSYalg:lorentz:exp}) as
+\begin{align}
+	it\,W^{\lambda\sigma} &= i t\omega^{\mu\nu}\left(M_{\mu\nu}\right)^{\lambda\sigma},
+\end{align}
+where $\omega^{\mu\nu}$ is an antisymmetric $4 \times 4$ matrix parameterizing the linear combination of the independent generators and $\left(M_{\mu\nu}\right)^{\lambda\sigma}$ are the Hermitian generators of the Lorentz group. The $\mu,\nu$ indices label the six generators, while the $\lambda,\sigma$ indices label the matrix structure of each generator.
+
+We may thus verify that  (\ref{eq:SUSYalg:LorentzGenerators}) indeed furnishes a basis for the generators of the Lorentz group connected to the identity
+\begin{align}
+(M^{\mu\nu})_{\rho\sigma}&=i(\delta^\mu_\rho\delta^\nu_\sigma-\delta^\mu_\sigma\delta^\nu_\rho).
+\end{align}
+The qualification ``connected to the identity'' turns out to be rather important, as we shall see when we consider representations of the Lorentz algebra in Section \ref{sec:SUSYalg:universal:cover}.
+
+\subsection{Components of the Lorentz Group}
+
+Recall that the Lorentz group has four disconnected parts. The defining  (\ref{eq:SUSYalg:lorentzgroup}) implies that 
+\begin{align}
+	\left(\det \mathbf\Lambda\right)^2 &= 1,\\
+	(\Lambda^0_{\phantom{0}0})^2-\sum_i(\Lambda_0^{\phantom{0}i})^2 &=1,
+\end{align}
+where the first equation comes from taking a determinant and the second equation comes from taking $\rho=\sigma=0$ in  (\ref{eq:SUSYalg:lorentzgroup:indices}). From these equations we see that 
+\begin{align}
+	\det\mathbf\Lambda &= \pm 1\\
+	\Lambda^0_{\phantom 00} &= \pm \sqrt{1+\sum_i(\Lambda_0^{\phantom{0}i})^2}.
+\end{align}
+The choice of the two signs on the right-hand sides of these equations labels the four components of the Lorentz group. One cannot form a smooth path in the space of Lorentz transformations starting in one component of and ending in another (i.e. they are disconnected).
+
+The component of the Lorentz group with $\det \mathbf\Lambda = +1$ contains the identity element and is a subgroup that preserves parity. In order to preserve the direction of time, one ought to further choose $\Lambda^0_{\phantom{0}0}\geq 1$. We shall specialize to this subgroup, which is called the \textbf{orthochronous Lorentz group}\index{Lorentz group!orthochronous}, $SO(3,1)^\uparrow_+$ which further satisfies 
+\begin{align}
+	\det \mathbf{\Lambda}&= +1\\
+	\Lambda^0_0 &\geq 1.
+\end{align}
+Other parts of the Lorentz group can be obtained from $SO(3,1)^\uparrow_+$ by applying the transformations
+\begin{align}
+	\Lambda_P &= \text{diag}(+,-,-,-)\\
+	\Lambda_T &= \text{diag}(-,+,+,+).
+\end{align}
+Here $\Lambda_P$ and $\Lambda_T$ respectively refer to parity and time-reversal transformations. One may thus write the Lorentz group in terms of `components' (not necessarily `subgroups'),
+\begin{align}
+	SO(3,1) &= SO(3,1)^\uparrow_+ \oplus SO(3,1)^\uparrow_- \oplus SO(3,1)^\downarrow_+ \oplus SO(3,1)^\downarrow_-,
+\end{align}
+where the up/down arrow refers to $\Lambda^0_{\phantom 00}$ greater/less than $\pm 1$, while the $\pm$ refers to the sign of $\det \mathbf\Lambda$. Again, only $SO(3,1)^\uparrow_\pm$ form subgroups. In these notes we will almost exclusively work with the orthochronous Lorentz group so that we will drop the $\pm$ and write this as $SO(3,1)^\uparrow$. 
+
+It is worth noting that the fact that the Lorentz group is not simply connected is related to the existence of a `physical' spinor representation, as we will mention below.
+
+\subsection{\texorpdfstring{The Lorentz Group is related to $SU(2) \times SU(2)$}{The Lorentz Group is related to SU(2)xSU(2)}}
+
+%\textbf{FT:} Excellent discussions can be found in \url{http://groups.google.com/group/sci.physics.research/browse_thread/thread/301d2700bacebc05/9d0b342e91b4eea9?hl=en&lnk=gst&q=reece#9d0b342e91b4eea9}
+
+Locally the Lorentz group is related to the group $SU(2)\times SU(2)$, i.e. one might suggestively write
+\begin{align}
+	SO(3,1) &\approx SU(2)\times SU(2).
+\end{align}
+Let's flesh this out a bit. One can explicitly separate the Lorentz generators $M^{\mu\nu}$ into the generators of rotations, $J_i$, and boosts, $K_i$:
+\begin{align}
+	J_i &= \frac 12 \,\epsilon_{ijk}\,M_{jk}\label{eq:Poincare:J}\\
+	K_i &= M_{0i},\label{eq:Poincare:K}
+\end{align}
+where $\epsilon_{ijk}$ is the usual antisymmetric Levi-Civita tensor. 
+$\mathbf J$ and $\mathbf K$ satisfy the algebra
+\begin{align}
+	[J_i, J_j] &= \phantom+ i\epsilon_{ijk}J_k\label{eq:SUSYalg:JJ}\\
+	[K_i, K_j] &= -i\epsilon_{ijk}J_k\label{eq:SUSYalg:KK}\\
+	[J_i, K_j] &= \phantom+ i\epsilon_{ijk}K_k.\label{eq:SUSYalg:JK}
+\end{align}
+We can now define `nice' combinations of these two sets of generators,
+\begin{align}
+	A_i &= \frac 12 (J_i + iK_i)\label{eq:SUSYalg:Ai}\\
+	B_i &= \frac 12 (J_i - iK_i)\label{eq:SUSYalg:Bi}.
+\end{align}
+This may seem like a very arbitrary thing to do, and indeed it's \textit{a priori} unmotivated. However, we now see that the algebra of these generators decouple into two $SU(2)$ algebras,
+\begin{align}
+	[A_i,A_j] &= i\,\epsilon_{ijk}\, A_k\\
+	[B_i,B_j] &= i\,\epsilon_{ijk}\, B_k\\
+	[A_i,B_j] &= 0.
+\end{align}
+Magic! %The $\textbf{A}$ and $\textbf{B}$ generators form \textit{decoupled} representations of the $SU(2)$ algebra. 
+Note, however, that from  (\ref{eq:SUSYalg:Ai}) and (\ref{eq:SUSYalg:Bi}) that these generators are \emph{not} Hermitian (gasp!). 
+Recall that a Lie group is generated by Hermitian operators. (Mathematicians often use anti-Hermitian generators.) Thus we were careful above \emph{not} to say that $SU(3,1)$ \textit{equals} $SU(2)\times SU(2)$, where `equals' usually means either isomorphic or homomorphic. As a further sanity check, $SU(2)\times SU(2)$ is manifestly compact while the Lorentz group cannot be since the elements corresponding to boosts can be arbitrarily far from the origin.
+%
+This is all traced back to the sign difference in the time-like component of the metric, i.e. the difference between $SO(4)$ and $SO(3,1)$. While rotations are Hermitian and generate unitary matrices, boosts are anti-Hermitian and generate anti-unitary matrices. At this level, then, our representations are non-unitary.
+
+Anyway, we needn't worry about the precise sense in which $SO(3,1)$ and $SU(2)\times SU(2)$ are related, the point is that we may label representations of $SO(3,1)$ by the quantum numbers of $SU(2)\times SU(2)$, $(A,B)$. For example, a Dirac spinor is in the $(\frac 12, \frac 12)=(\frac 12, 0)\oplus (0,\frac 12)$ representation, i.e. the direct sum of two Weyl reps. (More on this in Section \ref{sec:susyalg:repsofsl2c}.) To connect back to reality, the physical meaning of all this is that we may write the spin of a representation as $J=A+B$.
+
+\vspace{.5em}
+\begin{framed}
+	\noindent\textbf{So how are $SO(3,1)$ and $SU(2)\times SU(2)$ \textit{actually} related?} We've been deliberately vague about the exact relationship between the Lorentz group and $SU(2)\times SU(2)$. The precise relationship between the two groups are that the \textit{complex} linear combinations of the generators of the Lorentz algebra are isomorphic to the \textit{complex} linear combinations of the Lie \textit{algebra} of $SU(2)\times SU(2)$. 
+	\begin{align}
+		\mathcal L_{\mathbb{C}}(SO(3,1)) &\cong \mathcal L_{\mathbb{C}}(SU(2)\times SU(2))
+	\end{align}
+	Be careful not to say that the Lie algebras of the two groups are identical, it is important to emphasize that only the \textit{complexified} algebras are identifiable. 
+	% See: http://groups.google.com/group/sci.physics.research/browse_thread/thread/301d2700bacebc05/9d0b342e91b4eea9?hl=en&lnk=gst&q=reece#9d0b342e91b4eea9
+	% See also: http://groups.google.com/group/sci.physics.research/browse_thread/thread/73e95b0c8cca27fd/8f88fe7881dd56d0?hl=en&lnk=gst&q=pauli+matrix+indices#8f88fe7881dd56d0
+	%
+	% See further: Bilal's SUSY notes
+	The complexification of $SU(2)\times SU(2)$ is the special linear group, $SL(2,\mathbb C)$. In the next section we will identify $SL(2,\mathbb C)$ as the \textbf{universal cover}\index{universal cover} of the Lorentz group. First, however, we shall show that the Lorentz group is isomorphic to $SL(2,\mathbb C)/\mathbb{Z}_2$. We discuss this topic from an orthogonal direction in Section \ref{sec:SUSYalg:projective}.
+\end{framed}f
+% \vspace{.5em}
+\vspace{.5em}
+
+
+\subsection{\texorpdfstring{The Lorentz group is isomorphic to $SL(2,\mathbb{C})/\mathbb{Z}_2$}{The Lorentz group is isomorphic to SL(2,C)/Z2}}\index{SL(2,C)@$SL(2,\mathbb C)$}
+
+While the Lorentz group and $SU(2)\times SU(2)$ were neither related by isomorphism nor homomorphism, we \textit{can} concretely relate the Lorentz group to $SL(2,\mathbb{C})$. More precisely, the Lorentz group is isomorphic to the coset space $SL(2,\mathbb{C})/\mathbb{Z}_2$
+\begin{align}
+	SO(3,1) \cong SL(2,\mathbb{C})/\mathbb{Z}_2
+\end{align}
+
+% ***
+% % 
+Recall that we may represent four-vectors in Minkowski space as complex Hermitian $2\times 2$ matrices via $V^\mu \rightarrow V_\mu\sigma^\mu$, where the $\sigma^\mu$ are the usual Pauli matrices\index{Pauli matrix},
+\begin{align}
+	\sigma^0 = 
+	\begin{pmatrix}
+		1 & 0\\
+		0 & 1
+	\end{pmatrix}
+	\quad
+	\sigma^1 = 
+	\begin{pmatrix}
+		0 & 1\\
+		1 & 0
+	\end{pmatrix}
+	\quad
+	\sigma^2 = 
+	\begin{pmatrix}
+		0 & -i\\
+		i & 0
+	\end{pmatrix}
+	\quad
+	\sigma^3 = 
+	\begin{pmatrix}
+		1 & 0\\
+		0 & -1
+	\end{pmatrix}.\label{eq:SUSYalg:pauli:matrices}
+\end{align}
+$SL(2,\mathbb C)$ is the group of complex $2\times 2$ matrices with unit determinant. It is spanned precisely by these Pauli matrices. 
+Purists will admonish us for not explicitly distinguishing between a Lie group ($SL(2,\mathbb{C})$) and its algebra ($sl(2,\mathbb{C})$ or $\mathcal{L}[SL(2,\mathbb{C})]$ or $\mathfrak{sl}(2,\mathbb{C})$). The distinction is not worth the extra notational baggage since the meaning is clear in context
+
+
+To be explicit, we may associate a vector $\mathbf x$ with either a vector in Minkowski space $\mathbb M^4$ spanned by the unit vectors $e^\mu$,
+\begin{align}
+	\mathbf x &= x^\mu e_\mu = \left(x^0,x^1,x^2,x^3\right),\label{eq:susyalg:vectorrep}
+\end{align}
+	or with a matrix in $SL(2,\mathbb C)$,
+\begin{align}
+	\mathbf x &= x_\mu \sigma^\mu
+			  = \begin{pmatrix}
+			  	\phantom+x_0 + \phantom{i} x_3 &\quad \phantom+ x_1-ix_2\\
+				\phantom+x_1+ix_2 &\quad \phantom+ x_0-\phantom{i} x_3
+			  \end{pmatrix}.\label{eq:susyalg:sl2crep}
+\end{align}
+Note the lowered indices on the components of $x_\mu$, i.e. $(x^0,x^1,x^2,x^3) = (x_0,-x_1,-x_2,-x_3)$. The four-vector components are recovered from the $SL(2,\mathbb C)$ matrices via
+\begin{align}
+	x_0 &= \frac 12\text{Tr}(\mathbf{x}), & x_i &= \frac 12\text{Tr}(\mathbf{x}\sigma^i).\label{eq:SUSYalg:sl2ctom4}
+\end{align}
+The latter of these is easy to show by expanding $\mathbf{x} = x_0\mathbbm{1}^0 + x_i\sigma^i$ and then noting that $\mathbbm{1}\sigma^i \propto \sigma^i$, $\sigma^j\sigma^i|_{j\neq i}\propto \sigma^k_{k\neq i}$, and $\sigma^i\sigma^i|_{\text{no sum}}\propto \mathbbm{1}$. Thus only the $\sigma^i\sigma^i$ term of $\mathbf{x}\sigma^i$ has a trace, so that taking the trace projects out the other components.
+
+For the Minkowski four-vectors, we already understand how a Lorentz transformation $\mathbf \Lambda$ acts on a [covariant] vector $x^\mu$ while preserving the vector norm,   
+\begin{align}
+	|\mathbf x |^2 &= x_0^2 - x_1^2 - x_2^2 - x_3^2.\label{eq:SUSYalg:mink:invt}
+\end{align}
+This is just the content of  (\ref{eq:SUSYalg:lorentzgroup}), which defines the Lorentz group.
+
+For Hermitian matrices, there is an analogous transformation by the action of the group of invertible complex matrices of unitary determinant, $SL(2,\mathbb C)$. For $\mathbf N \in SL(2,\mathbb C)$, $\mathbf N^\dag \mathbf{x} \mathbf N$
+is also in the space of Hermitian $2\times 2$ matrices. Such transformations preserve the determinant of $\mathbf x$,
+\begin{align}
+	\det \mathbf{x} &= x_0^2 - x_1^2 - x_2^2 - x_3^2.\label{eq:SUSYalg:herm:invt}
+\end{align}
+The equivalence of the right-hand sides of s (\ref{eq:SUSYalg:mink:invt}) and (\ref{eq:SUSYalg:herm:invt}) are very suggestive of an identification between the Lorentz group $SO(3,1)$ and $SL(2,\mathbb C)$. Indeed,  (\ref{eq:SUSYalg:herm:invt}) implies that for each $SL(2,\mathbb C)$ matrix $\mathbf N$, there exists a Lorentz transformation $\Lambda$ such that 
+\begin{align}
+	\mathbf{N^\dag} x^\mu \mathbf{\sigma}_\mu \mathbf{N} &= (\Lambda x)^\mu \mathbf{\sigma}_\mu.\label{eq:SUSYalg:SL2C:Lorentz}
+\end{align}
+A very 
+important feature should already be apparent: the map from $SL(2,\mathbb C)\rightarrow SO(3,1)$ is two-to-one. This is clear since the matrices $\mathbf N$ and $-\mathbf N$ yield the \textit{same} Lorentz transformation, $\Lambda^\mu_{\phantom\mu\nu}$. Hence it is not $SO(3,1)$ and $SL(2,\mathbb C)$ that are isomorphic, but rather $SO(3,1)$ and $SL(2,\mathbb C)/\mathbb Z_2$.
+
+The point is that one will miss something if one only looks at representations of $SO(3,1)$ and not the representations of $SL(2,\mathbb C)$. This `something' is the spinor representation\index{spinor}. How should we have known that $SL(2,\mathbb C)$ is the important group? One way of seeing this is noting that $SL(2,\mathbb C)$ is \textbf{simply connected} as a group manifold.
+
+By the polar decomposition for matrices, any $g \in SL(2,\mathbb C)$ can be written as the product of a unitary matrix $U$ times the exponentiation of a traceless Hermitian matrix $h$,
+\begin{align}
+	g &= U e^{h}.
+\end{align}
+We may write these matrices explicitly in terms of real parameters $a,\cdots,g$;
+\begin{align}
+	 h &= \begin{pmatrix}c \quad& a-ib\\ a+ib \quad& -c\end{pmatrix}\\
+	 U &= \begin{pmatrix}d+ie \quad& f+ig\\-f+ig \quad& d-ie\end{pmatrix}.
+\end{align}
+Here $a,b,c$ are unconstrained while $d,\cdots,g$ must satisfy
+\begin{align}
+	d^2+e^2+f^2+g^2 &= 1.
+\end{align}
+Thus the space of $2\times 2$ traceless Hermitian matrices $\{h\}$ is topologically identical to $\mathbb R^3$ while the space of unit determinant $2\times 2$ unitary matrices $\{U\}$ is topologically identical to the three-sphere, $S_3$. Thus we have
+\begin{align}
+	SL(2,\mathbb C) &= \mathbb R^3 \times S_3.
+\end{align}
+As both of the spaces on the right-hand side are simply connected, their product, $SL(2,\mathbb C)$, is also simply connected. This is a `nice' property because we can write down any element of the group by exponentiating its generators at the identity. But even further, since $SL(2,\mathbb C)$ is simply connected, its quotient space $SL(2,\mathbb C)/\mathbb Z_2 = SO(3,1)^\uparrow$ is \emph{not} simply connected.
+
+\subsection{Universal cover of the Lorentz group}\label{sec:SUSYalg:universal:cover}
+% This comes from Kuzenko p.4
+
+The fact that $SO(3,1)^\uparrow$ is not simply connected should bother you. In the back of your mind, your physical intuition should be unsatisfied with non-simply connected groups. This is because simply-connected groups have the very handy property of having a one-to-one correspondence between representations of the group and representations of its algebra; i.e. we can write any element of the group as the exponentiation of an element of the algebra about the origin. 
+
+What's so great about this property? In quantum field theory fields transform according to representations of a symmetry's algebra, not representations of the group. Since $SO(3,1)^\uparrow$ is not simply connected, the elements of the algebra at the identity that we used do \textit{not} tell the whole story. They were fine for constructing finite elements of the Lorentz group \textit{that were connected to the identity}, but they don't capture the \textit{entire} algebra of $SO(3,1)^\uparrow$.
+
+\vspace{.5em}
+\begin{framed}
+	\noindent\textbf{To spoil the surprise,} the point is this: the elements of the algebra of $SO(3,1)^\uparrow$ at the identity capture the vector (i.e. fundamental) representation of the Lorentz group, but it misses the spinor representation.
+\end{framed}
+\vspace{.5em}
+
+Now we're in a pickle. Given a group, we know how to construct representations of an algebra near the identity based on group elements connected to the identity. But this only characterizes the entire algebra if the group is simply connected. $SO(3,1)^\uparrow$ is \textit{not} simply connected. Fortunately, there's a trick. It turns out that for any connected Lie group, there exists a unique `minimal' simply connected group that is homeomorphic to it called the \textbf{universal covering group}\index{universal covering group}. 
+
+% from Kuzenko
+Stated slightly more formally, for any connected Lie group $G$, there exists a simply connected universal cover $\tilde{G}$ such that there exists a homomorphism $\pi:\tilde G \to G$ where $G \cong \tilde G/\ker \pi$ and $\ker \pi$ is a discrete subgroup of the center of $\tilde G$. Phew, that was a mouthful. For the Lorentz group this statement is $SO(3,1)^\uparrow \cong SL(2,\mathbb{C})/\mathbb{Z}_2$. Thus the key statement is:
+\begin{center}
+% \begin{quote}
+The Lorentz group is covered by $SL(2,\mathbb{C})$.
+% \end{quote} 
+\end{center}
+The point is that the homomorphism $\pi$ is locally one-to-one and thus $G$ and $\tilde G$ have the same Lie algebras. Thus we can determine the Lie algebra of $G$ away from the identity by considering the  Lie algebra for $\tilde G$ at the identity.
+
+This universal covering group of $SO(3,1)^\uparrow$ is often referred to as $Spin(3,1)$\index{spin(3,1)@\textit{Spin(3,1)}}. The name is no coincidence, it has everything to do with the spinor representation.
+
+% % 
+% % 
+% % % \vspace{.5em}
+% % % \begin{framed}
+% % % 	\noindent \textbf{Projective representations and universal covering groups}. 
+% % 
+\subsection{Projective representations}\label{sec:SUSYalg:projective}
+
+For the uninitiated, it may not be clear why the above rigamarole is necessary or  interesting. Here we would like to approach the topic from a different direction to explain why the spinor representation is necessarily the `most basic' representation of four-dimensional spacetime symmetry.
+	
+% % 	\noindent 
+A typical ``representation theory for physicists'' course goes into detail about constructing the usual tensor representations of groups but only mentions the spinor representation of the Lorentz group in passing. Students `inoculated' with a quantum field theory course will not bat an eyelid at this, since they're already used to the technical manipulation of spinors. But where does the spinor representation come from if all of the `usual' representations we're used to are tensors?
+	
+% % 	\noindent
+ The answer lies in quantum mechanics. Recall that when we write representations $U$ of a group $G$, we have $U(g_1)U(g_2) = U(g_1g_2)$ for $g_1, g_2 \in G$. In quantum physics, however, physical states are invariant under phases, so we have the freedom to be more general with our multiplication rule for representations: $U(g_1)U(g_2) = U(g_1g_2)\exp({i\phi(g_1,g_2)})$. Such `representations' are called \textbf{projective representations}. In other words, quantum mechanics allows us to use projective representations rather than ordinary representations. 
+	
+% % 	\noindent 
+It turns out that not every group admits `inherently' projective representations. In cases where such reps are not allowed, a representation that one \textit{tries} to construct to be projective can have its generators redefined to reveal that it is actually an ordinary non-projective representation. The relevant mathematical result for our purposes is that groups which are \textit{not} simply connected---such as the Lorentz group---\textit{do} admit inherently projective representations. 
+	
+% % 	\noindent 
+The Lorentz group is \textit{doubly} connected, i.e. going over any loop \textit{twice} will allow it to be contracted to a point. This means that the phase in the projective representation must be $\pm 1$. One can consider taking a loop in the Lorentz group that corresponds to rotating by $2\pi$ along the $\hat z$-axis. Representations with a projective phase $+1$ will return to their original state after a single rotation, these are the particles with integer spin. Representations with a projective phase $-1$ will return to their original state only after \textit{two} rotations, and these correspond to fractional-spin particles, or spinors. 
+	
+% % 	\noindent 
+An excellent discussion of projective representations can be found in Weinberg, Volume I \cite{Weinberg:1995mt}. 
+% % 	%We reproduce the main parts of Weinberg's argument in \Appendix \ref{chap:Poincare}. 
+	More on the representation theory of the Poincare group and its SUSY extension can be found in Buchbinder and Kuzenko \cite{Buchbinder:1998qv}. Further pedagogical discussion of spinors can be found in \cite{spinorspanner}. Some discussion of the topology of the Lorentz group can be found in Frankel section 19.3a \cite{Frankel:2004}.
+% % % \end{framed}
+% % % \vspace{.5em}
+% % 
+% % % Actually, message is a bit subtler: projective representations
+% % 
+% % % As a sanity check, we can consider the invariants of each case. In $\mathbb M^4$,
+% % % \begin{align}
+% % % 	|\mathbf x |^2 &= x_0^2 - x_1^2 - x_2^2 - x_3^2,
+% % % \end{align}
+% % % is invariant, using $\mathbf{\Lambda^T\eta\Lambda = \eta}$. In $SL(2,\mathbb C)$,
+% % % \begin{align}
+% % % 	\det \mathbf{x} &= x_0^2 - x_1^2 - x_2^2 - x_3^2,
+% % % \end{align}
+% % % is invariant under $\mathbf x \rightarrow \mathbf{NxN}^\dag$ with $N\in SL(2,\mathbb C)$. 
+% % 
+% % % So we can construct a map from $SO(3,1)$ to $SL(2,\mathbb C)$, but what about the map from $SL(2,\mathbb C)$ back to $SO(3,1)$? One will note that the action of $\mathbf N$ and $-\mathbf{N} \in SL(2,\mathbb C)$ produce the \textit{same} Lorentz transformation
+% % % 
+% % % 
+% % % , and hence it is not an isomorphism\footnote{See \Appendix \ref{chap:Poincare} for a proof of this.}. Thus one would miss... only look at representations of $SO(3,1)$, and not $SL(2,\mathbb C)$, you'll be missing something.
+% % 
+% % 
+% % % So we can construct a map from $SO(3,1)$ to $SL(2,\mathbb C)$, but it turns out that the map from $SL(2,\mathbb C)$ back to $SO(3,1)$ is 2-to-1, and hence it is not an isomorphism\footnote{See \Appendix \ref{chap:Poincare} for a proof of this.}. Thus one would miss... only look at representations of $SO(3,1)$, and not $SL(2,\mathbb C)$, you'll be missing something.
+% % 
+
+\subsection{Lorentz representations are non-unitary and non-compact}\label{sec:SUSYalg:nonunitary}
+% % 
+% % % See Ryder P.40
+% % 
+If you weren't vigilant you might have missed a potential deal-breaker. We mentioned briefly that the representations of the Lorentz group are not unitary. The generators of boosts are imaginary. This makes them \textit{anti-unitary} rather than unitary. From the point of view of quantum mechanics this is the kiss of death since we know that only \textit{unitary} representations preserve probability. Things aren't looking so rosy anymore, are they? 
+
+Where does this non-unitarity come from? (Maybe we can fix it?) It all comes from the factor of $i$ associated with boosts. Just look at (\ref{eq:SUSYalg:Ai}) and (\ref{eq:SUSYalg:Bi}). This factor of $i$ is crucial since is is related to the non-compactness of the Lorentz group. This is a very intuitive statement: rotations are compact since the rotation parameter lives on a circle ($\theta=0$ and $\theta=2\pi$ are identified) while boosts are non-compact since the rapidity can take on any value along the real line. The dreaded factor of $i$, then, is deeply connected to the structure of the group. In fact, it's precisely the difference between $SO(3,1)$ and $SO(4)$, i.e. the difference between space and time: a minus sign in the metric. To make the situation look even more grim, even if we were able to finagle a way out of the non-unitarity issue (and we can't), there is a theorem that unitary representations of non-compact groups are infinite-dimensional. There is nothing infinite-dimensional about the particles we hope to describe with the Lorentz group. This is looking like quite a pickle!
+
+Great---what do we do now? Up until now we'd been thinking about representations of the Lorentz group as if they would properly describe particles. Have we been wasting our time looking at representations of the Lorentz group? No; fortunately not---but we'll have to wait until Section \ref{sec:SUSYreps} before we properly resolve this apparent problem. The key, however, is that one must look at \textit{full} Poincare group (incorporating translations as well as Lorentz transformations) to develop a consistent picture. Adding the translation generator $P$ to the algebra surprisingly turns out to cure the ills of non-unitarity (i.e. of non-compactness). The cost for these features, as mentioned above, is that the representations will become infinite dimensional, but this infinite dimensionality is well-understood physically: we can boost into any of a continuum of frames where the particle has arbitrarily boosted four-momentum. %In fact, we'll even find a sensible way to work with \textit{finite} dimensional reps rather than the \textit{infinite} dimensional reps that one would expect form the Lorentz group alone.
+
+This is why most treatments of this subject don't make a big deal about the Lorentz group not being satisfactory for particle representations. They actually end up being rather useful for describing \textit{fields}, where the non-unitarity of the Lorentz representations isn't a problem because the actual states in the quantum Hilbert space are the \textit{particles} which are representations of the full Poincare group. We will go over this in more detail in Section \ref{eq:SUSYreps:unitarity}. 
+
+For now our strategy will be to sweep any concerns about unitarity under the rug and continue to learn more about representations of the Lorentz group. We'll then use what we learn to show some neat properties of SUSY irreducible representations. We'll then get back to the matter at hand and settle the present issues by working with representations of the Poincare group. The take-home message, however, is that it is not sufficient to just have the Lorentz group; nature really needs the full Poincare group to make sense of itself. This principle of extending symmetries will carry through the rest of our exploration of supersymmetry and extra dimensions, and indeed has been a guiding principle for particle physics over the past three decades. 
+% % 
+
+\section{Spinors: the fundamental representation of $SL(2,\mathbb{C})$}\label{sec:susyalg:repsofsl2c}
+
+The representations of the universal cover of the Lorentz group, $SL(2,\mathbb C)$, are spinors. Most standard quantum field theory texts do calculations in terms of four-component Dirac spinors. This has the benefit of representing all the degrees of freedom of a typical Standard Model massive fermion into a single object. In SUSY, on the other hand, it will turn out to be natural to work with two-component spinors. For example, a complex scalar field has two real degrees of freedom. In order to have a supersymmetry between complex scalars and fermions, we require that the number of degrees of freedom match for both types of object. A Dirac spinor, however, has four real degrees of freedom ($2 \times$ (4 complex degrees of freedom) $-$ 4 from the Dirac equation). Weyl spinors, of course, have just the right number of degrees of freedom. As an aside, one should remember that the Standard Model is a \textit{chiral} theory which already is most naturally written in terms of Weyl spinors---that's why the SM Feynman rules in Dirac notation always end up with ugly factors of $\frac{1}{2}(\mathbbm{1}\pm\gamma^5)$.  A comprehensive guide review of two-component spinors can be found in Dreiner et al.~\cite{Dreiner:2008tw}.
+
+Let us start by defining the \textbf{fundamental}\index{SL(2,C)@$SL(2,\mathbb C)$!fundamental representation} and \textbf{conjugate}\index{SL(2,C)@$SL(2,\mathbb C)$!conjugate representation} (or \textbf{antifundamental}) representations of $SL(2,\mathbb C)$. These are just the matrices $N_\alpha^{\phantom\alpha\beta}$ and $(N^*)_{\dot\alpha}^{\phantom\alpha\dot\beta}$. Don't be startled by the dots on the indices, they're just a book-keeping device to keep the fundamental and the conjugate indices from getting mixed up. One cannot contract a dotted with an undotted $SL(2,\mathbb C)$ index; this would be like trying to contract spinor indices ($\alpha$ or $\dot\alpha$) with vector indices ($\mu$): they index two totally different representations.%\footnote{This doesn't mean that we can't swap between different types of indices. In fact, this is exactly what we did in s (\ref{eq:susyalg:vectorrep}) and (\ref{eq:susyalg:sl2crep}). We'll get to the role of the $\sigma$ matrices very shortly.}. 
+
+We are particularly interested in the objects that these matrices act on. Let us thus define \textbf{left-handed Weyl spinors}, $\psi$, as those acted upon by the fundamental rep and \textbf{right-handed Weyl spinors}, $\overline\chi$, as those that are acted upon by the conjugate rep. Again, do not be startled with the extra jewelry that our spinors display. The bar on the right-handed spinor just serves to distinguish it from the left-handed spinor. To be clear, they're both spinors, but they're different types of spinors that have different types of indices and that transform under different representations of $SL(2,\mathbb C)$. Explicitly,
+\begin{align}
+	\psi'_\alpha &= N_\alpha^{\phantom\alpha\beta} \psi_\beta \\
+	\overline\chi'_{\dot{\alpha}} &= \left(N^*\right)_{\dot{\alpha}}^{\phantom{\dot{\alpha}}\dot{\beta}}\overline\chi_{\dot{\beta}}.	
+\end{align}
+
+
+\section{Invariant Tensors} % See Aitchison
+
+We know that $\eta_{\mu\nu}$ is invariant under $SO(3,1)$ and can be used (along with the inverse metric) to raise and lower $SO(3,1)$ indices. For $SL(2,\mathbb{C})$, we can build an analogous tensor, the unimodular antisymmetric tensor\index{antisymmetric tensor}
+\begin{align}
+	\epsilon^{\alpha\beta} %&= i(\sigma^{2})_{\alpha\beta}\\
+	&= \begin{pmatrix}
+		0 \quad& 1 \\
+		-1 \quad& 0
+	\end{pmatrix}.\label{eq:SUSYalg:epsilonupper}
+\end{align}
+Unimodularity (unit determinant) and antisymmetry uniquely define the above form
+up to an overall sign. The choice of sign ($\epsilon^{12}=1$) is a convention. As a mnemonic, $\epsilon^{\alpha\beta}=i\left(\sigma^2\right)_{\alpha\beta}$, but note that this is not a formal equality since we will see below that the index structure on the $\sigma^2$ is incorrect. %\footnote{The convention is often summarized as $\epsilon^{12}=1$, with all other elements coming from antisymmetry. We prefer using a definition in terms of $i\sigma^2$ since honest physics students know the $\sigma$ matrices by heart. It is important to emphasize, however, that $\epsilon_{\alpha\beta}=i(\sigma^\mu)_{\alpha\beta}$ is a \textit{matrix} relation--the index structures on the left- and right-hand sides do not match.}.
+ This tensor is invariant under $SL(2,\mathbb C)$ since
+\begin{align}
+	\epsilon'^{\alpha\beta} = \epsilon^{\rho\sigma}N_\rho^{\phantom{\rho}\alpha}N_\sigma^{\phantom\sigma\beta}
+	=\epsilon^{\alpha\beta}\det N
+	= \epsilon^{\alpha\beta}.
+\end{align}
+We can now use this tensor to raise undotted $SL(2\mathbb{C})$ indices:
+\begin{align}
+	\psi^\alpha &\equiv \epsilon^{\alpha\beta}\psi_\beta.
+\end{align}
+To lower indices we can use an analogous unimodular antisymmetric tensor with two lower indices.
+For consistency, the overall sign of the lowered-indices tensor must be defined as
+\begin{align}
+	\epsilon_{\alpha\beta} &= -\epsilon^{\alpha\beta},
+\end{align}
+so that raising and then lowering returns us to our original spinor:
+\begin{align}
+	\epsilon_{\alpha\beta}\epsilon^{\beta\gamma} &= \delta^\gamma_\alpha.
+\end{align}
+This is to ensure that the upper- and lower-index tensors are inverses, i.e. so that the combined operation of raising then lowering an index does not introduce a sign.
+%
+Dotted indices indicate the complex conjugate representation, $\epsilon_{\alpha\beta}^{*} = \epsilon_{\dot\alpha\dot\beta}$. Since $\epsilon$ is real we thus use the same sign convention for dotted indices as undotted indices,
+\begin{align}
+	\epsilon^{\dot 1 \dot 2} = \epsilon^{12} = - \epsilon_{\dot 1 \dot 2} = - \epsilon_{12}.
+\end{align}
+%
+We may raise dotted indices in exactly the same way:
+\begin{align}
+	\overline\chi^{\dot\alpha} &\equiv \epsilon^{\dot \alpha \dot \beta}\overline\chi_{\dot\beta}.
+\end{align}
+In order to avoid sign errors, it is a useful mnemonic to always put the $\epsilon$ tensor directly to the left of the spinor whose indices it is manipulating, this way the index closest to the spinor contracts with the spinor index. In other words, one needs to be careful since  $\epsilon^{\alpha\beta}\psi_\beta \neq \psi_\beta\epsilon^{\beta\alpha}$.
+%
+
+In summary:
+\begin{align}
+	\psi^\alpha &= \epsilon^{\alpha\beta}\psi_\beta & \psi_\alpha &= \epsilon_{\alpha\beta}\psi^\beta & \overline\chi^\alpha &= \epsilon^{\dot\alpha\dot\beta}\psi_{\dot\beta} & \overline\chi_{\dot\alpha} &= \epsilon_{\dot\alpha\dot\beta}\overline\chi^{\dot\beta}.
+\end{align}
+
+\section{Contravariant representations}
+Now that we're familiar with the $\epsilon$ tensor, we should tie up a loose end from Section \ref{sec:susyalg:repsofsl2c}. There we introduced the fundamental and conjugate representations of $SL(2,\mathbb{C})$. What happened to the \textbf{contravariant} representations that transform under the inverse matrices $N^{-1}$ and $N^{*-1}$? For a general group, e.g. $GL(N,\mathbb{C})$, these are unique representations so that we have a total of four different reps for a given group.
+%
+% Let us make another parenthetical note that we may also form \textbf{contravariant} representations of $SL(2,\mathbb C)$ using the inverse matrices $N^{-1}$ and $N^{*-1}$,
+% \begin{align}
+% 	\psi'^\alpha &= \psi^\beta(N^{-1})_\beta^{\phantom\beta\alpha}\\
+% 	\overline{\chi}'^{\dot{\alpha}} &= \overline{\chi}^{\dot{\beta}}(N^{*-1})_{\dot{\beta}}^{\phantom{\dot{\beta}}\dot{\alpha}}.
+% \end{align}
+
+It turns out that for $SL(2,\mathbb{C})$ these contravariant representations are equivalent (in the group theoretical sense) to the fundamental and conjugate representations presented above. Using the antisymmetric tensor $\epsilon_{\alpha\beta}$ ($\epsilon^{12}=1$) and the unimodularity of $N\in SL(2,\mathbb C)$,
+\begin{align}
+	\epsilon_{\alpha\beta}N^\alpha_{\phantom\alpha\gamma}N^\beta_{\phantom\beta\delta} &= \epsilon_{\gamma\delta}\det N\\
+	\epsilon_{\alpha\beta}N^\alpha_{\phantom\alpha\gamma}N^\beta_{\phantom\beta\delta} &= \epsilon_{\gamma\delta}\\
+	\left(N^T\right)_{\gamma}^{\phantom\gamma\alpha}\epsilon_{\alpha\beta}N^\beta_{\phantom\beta\delta} &= \epsilon_{\gamma\delta}\\
+	\epsilon_{\alpha\beta}N^\beta_{\phantom\beta\delta} &= \left[\left(N^T\right)^{-1}\right]_{\alpha}^{\phantom\alpha\gamma}\epsilon_{\gamma\delta}
+\end{align}
+% See page 419 of Binetruy, eq (B.3)
+%
+And hence by Schur's Lemma $N$ and $(N^T)^{-1}$ are equivalent. Similarly, $N^*$ and $(N^\dag)^{-1}$ are equivalent. This is not surprising, of course, since we already knew that the antisymmetric tensor, $\epsilon$, is used to raise and lower indices in $SL(2,\mathbb C)$. Thus the equivalence of these representations is no more `surprising' than the fact that Lorentz vectors with upper indices are equivalent to Lorentz vectors with lower indices. Explicitly, then, the contravariant representations\index{SL(2,C)@$SL(2,\mathbb C)$!contravariant representations} transform as
+\begin{align}
+	\psi'^\alpha &= \psi^\beta(N^{-1})_\beta^{\phantom\beta\alpha}\\
+	\overline{\chi}'^{\dot{\alpha}} &= \overline{\chi}^{\dot{\beta}}(N^{*-1})_{\dot{\beta}}^{\phantom{\dot{\beta}}\dot{\alpha}}.
+\end{align}
+
+% To summarize, our two-component spinor representations are
+% \begin{align}
+% 	\psi'_\alpha &= N_\alpha^{\phantom\alpha\beta}\psi_\beta\label{eq:SUSYalg:reps:1}\\
+% 	\overline\chi'_{\dot\alpha} &= (N^*)_{\dot\alpha}^{\phantom\alpha\dot\beta}\overline\chi_{\dot\beta}\label{eq:SUSYalg:reps:2}\\
+% 	\psi'^\alpha &= \psi^\beta(N^{-1})_\beta^{\phantom\beta\alpha}\label{eq:SUSYalg:reps:3}\\
+% 	\overline\chi'^{\dot\alpha} &= \overline\chi^{\dot\beta}(N^{*-1})_{\dot\beta}^{\phantom\beta\dot\alpha}.\label{eq:SUSYalg:reps:4}
+% \end{align}
+% Occasionally one will see s (\ref{eq:SUSYalg:reps:2}) and (\ref{eq:SUSYalg:reps:4}) written in terms of Hermitian conjugates,
+% \begin{align}
+% 	\overline\chi'_{\dot\alpha} &= \overline\chi_{\dot\beta}(N^\dag)_{\phantom\beta\dot\alpha}^{\dot\beta}\label{eq:SUSYalg:reps:2p}\\
+% 	\overline\chi'^{\dot\alpha} &= (N^{\dag-1})_{\phantom\alpha\dot\beta}^{\dot\alpha}\overline\chi^{\dot\beta}.\label{eq:SUSYalg:reps:4p}
+% \end{align}
+% %= \quad \overline\chi_{\dot\beta}(N^\dag)^{\dot\beta}_{\phantom\beta\dot\alpha}
+% We will not advocate this notation, however, since Hermitian conjugates are a bit delicate notationally in quantum field theories.
+
+Let us summarize the different representations for $SL(2,\mathbb{C})$,
+
+\begin{center}
+	\begin{tabular}{|lll|}
+		\hline
+		\textbf{Representation} & \textbf{Index Structure} & \textbf{Transformation}\\
+		\hline
+		Fundamental & Lower & $\psi'_\alpha = N_\alpha^{\phantom\alpha\beta}\psi_\beta$\\
+		Conjugate & Lower dotted & $\overline\chi'_{\dot\alpha} = (N^*)_{\dot\alpha}^{\phantom\alpha\dot\beta}\overline\chi_{\dot\beta}$\\
+		Contravariant & Upper & $	\psi'^\alpha = \psi^\beta(N^{-1})_\beta^{\phantom\beta\alpha}$\\
+		Contra-conjugate & Upper dotted & $\overline\chi'^{\dot\alpha} = \overline\chi^{\dot\beta}(N^{*-1})_{\dot\beta}^{\phantom\beta\dot\alpha}$\\
+		\hline
+	\end{tabular}.	
+\end{center}
+Occasionally one will see the conjugate and contravariant-conjugate transformations written in terms of Hermitian conjugates,
+\begin{align}
+	\overline\chi'_{\dot\alpha} &= \overline\chi_{\dot\beta}(N^\dag)_{\phantom\beta\dot\alpha}^{\dot\beta}\label{eq:SUSYalg:reps:2p}\\
+	\overline\chi'^{\dot\alpha} &= (N^{\dag-1})_{\phantom\alpha\dot\beta}^{\dot\alpha}\overline\chi^{\dot\beta}.\label{eq:SUSYalg:reps:4p}
+\end{align}
+%= \quad \overline\chi_{\dot\beta}(N^\dag)^{\dot\beta}_{\phantom\beta\dot\alpha}
+We will not advocate this notation, however, since Hermitian conjugates are a bit delicate notationally in quantum field theories. For more details about the representations of $SL(2,\mathbbm{C})$, see the appendix of Wess and Bagger \cite{Wess:1992cp}.
+
+\vspace{.5em}
+\begin{framed}
+	\noindent\textbf{Example of equivalent representations.} We stated before that the fundamental, conjugate, contravariant, and contravariant-conjugate representations of $GL(N,C)$ are generally not equivalent. We've seen that for $SL(2,\mathbb{C})$ this is not true, and there are only two unique representations. Another example is $U(N)$, for which $U^\dag = U^{-1}$ and $U^{\dag-1} = U$. Thus, unlike $SL(2,\mathbb{C})$ where the upper- and lower-index representations are equivalent, for $U(N)$ the dotted- and undotted-index representations are equivalent.
+\end{framed}
+\vspace{.5em}
+
+Note that there are different conventions for the index height, but the point is that the upper and lower index objects are equivalent due to the $\epsilon$ tensor. We can see this in a different way by looking at tensor structures. %For matrices $N$ in $SL(N,\mathbb{C})$ we have $\det N = 1$.
+
+\section{Stars and Daggers}\label{sec:SUSYalg:starsanddaggers}
+
+
+Let us take a pause from our main narrative to clarify some notation. When dealing with \textit{classical} fields, the complex conjugate representation is the usual complex conjugate of the field; i.e. $\psi \rightarrow \psi^*$. When dealing with \textit{quantum} fields, on the other hand, it is conventional to write a Hermitian conjugate; i.e. $\psi \rightarrow \psi^\dag$. This is because the quantum field contains creation and annihilation \textit{operators}. The Hermitian conjugate here is the quantum version of complex conjugation. (We'll explain this statement below.)
+
+This is the same reason why Lagrangians are often written $\mathcal L =$ term $+\; \text{h.c.}$ 
+%
+In classical physics, the Lagrangian is a scalar quantity so one would expect that one could have just written `c.c.' (complex conjugate) rather than `h.c.' (Hermitian conjugate). In QFT, however, the fields in the Lagrangian are operators that must be Hermitian conjugated.
+% % %
+% % 
+% % \noindent
+ When taking a first general relativity course, some students develop a very bad habit: they think of lower-index objects as row vectors and upper-index objects as column vectors, so that
+\begin{align}
+	V_\mu W^\mu &= \begin{pmatrix}
+		V_0 & V_1 & V_2 & V_3
+	\end{pmatrix}\cdot
+	\begin{pmatrix}
+		W^0 \\ W^1 \\ W^2 \\ W^3
+	\end{pmatrix}.
+\end{align}
+Thus they think of the covariant vector as somehow a `transpose' of contravariant vectors. This is is a bad, bad, \textit{bad} habit and those students must pay their penance when they work with spinors. In addition to confusion generated from the antisymmetry of the metric and the anticommutation relations of the spinors, such students become confused when reading an expression like $\psi_\alpha^\dag$ because they interpret this as 
+\begin{align}
+	\psi_\alpha^\dag \stackrel{?}{=} (\psi_\alpha^*)^T = (\overline\psi_{\dot\alpha})^T \stackrel{?}{=} \overline\psi^{\dot\alpha}
+\end{align}
+\textit{Wrong! Fail! Go directly to jail, do not pass go!}
+The dagger ($^\dag$) on the $\psi$ acts \textit{only} on the quantum operators in the field $\psi$, it doesn't know and doesn't care about the Lorentz index. Said once again, with emphasis: \textit{There is no transpose in the quantum Hermitian conjugate!}
+
+To be safe, one could always write the Hermitian conjugate since this is `technically' always correct. The meaning, however, is not always clear. Hermitian conjugation is always defined with respect to an inner product. Anyone who shows you a Hermitian conjugate without an accompanying inner product might as well be selling you a used car with no engine. 
+
+In matrix quantum theory the inner product comes with the appropriate Hilbert space. This is what is usually assumed when you see a dagger in QFT. In quantum wave mechanics, on the other hand, the Hermitian conjugate is defined with respect to the $L^2$ inner product,
+\begin{align}
+	\langle f,g \rangle &= \int dx\, f^*(x)\,g(x),
+\end{align}
+so that its action on fields is just complex conjugation. The structure of the inner product still manifests itself, though. Due to integration by parts, the Hermitian conjugate of the derivative is non-trivial,
+\begin{align}
+	\left(\frac{\partial}{\partial x}\right)^\dag &= -\frac{\partial}{\partial x}.
+\end{align}
+As you know very well we're really just looking at different aspects of the same physics.
+
+\vspace{.5em}
+\begin{framed}
+\noindent\textbf{Not-so-obvious inner products}. It may seem like we're beating a dead undergrad with a stick with all this talk of the canonical inner product. However, in spaces with boundaries---such as the Randall-Sundrum model of a warped extra dimension---the choice of an inner product can be non-trivial. In order for certain operators to be Hermitian (e.g. so that physical masses are non-negative),  functional inner products have to be modified. This changes the expansion of a function (e.g. a wavefunction) in terms of an `orthonormal basis.'
+\end{framed} 
+\vspace{.5em}
+
+The relevant inner product depends on the particular representation one is dealing with. In Section \ref{chap:SUSYreps} we'll discuss representations of supersymmetry on the space of one-particle states. In this case the inner product is the usual bracket for linear matrix\footnote{We say `matrix' because the one-particle state space is finite-dimensional so we could actually write our operators explicitly as matrices. This doesn't actually provide much insight and we won't do this, but the terminology is helpful to distinguish between the superspace picture where the operators are differential operators.} operators on the finite dimensional space of states in a SUSY multiplet and we can think of daggers as usual for quantum mechanics operators (e.g. turning raising and lowering operators into each other). That will give us some insight about the particle content in SUSY, but we won't really start doing field theory until Section \ref{chap:superspace} where we define a `superspace' upon with `superfields' propagate. In this case we'll use the appropriate generalization of the $L^2$ inner product for the infinite dimensional space of functions on superspace. The operators in the superspace picture will no longer be matrix operators but differential operators which one must be careful keeping track of minus signs from integration-by-parts upon Hermitian conjugation.
+
+It is worth making one further note about notation. Sometimes authors will write
+\begin{align}
+	\overline\psi_{\dot\alpha} &= \psi^\dag_\alpha.
+\end{align}
+This is technically correct, but it can be a bit misleading since one shouldn't get into the habit of thinking of the bar as some kind of operator. The bar and its dotted index are notation to distinguish the right-handed representation from the left-handed representation. The content of the above equation is the statement that the conjugate of a left-handed spinor transforms as a right-handed spinor.
+
+If none of that made any sense, then you should take a deep breath, pretend you didn't read any of this, and continue to the next section. It be clear when we start making use of these ideas in proper context.
+
+
+% \end{framed}
+% \vspace{.5em}
+% % 
+% % % SUBTLETIES
+% % % Aitchison 2.3: until this point he used index-free spinors and now introduces the useful notation
+% % % Bailin and Love: starts off with raised and lowered indices. But not well defined.
+% % % Wess and Bagger: this matches what we're doing, see appendix A. This is well defined. 
+% % 
+% % % There is ambiguity in how barred/unbarred (R/L) spinors have their indices assigned: upper or lower. In particular, does the barred spinor have an upper or lower dotted index?
+% % 
+% % % \emph{\textbf{FLIP:}I should have noted earlier: why is $\psi^\dag_\alpha = \overline\psi_{\dot\alpha}$? Well, $\psi \rightarrow N\psi$, so $\overline \psi \rightarrow N^*\overline\psi$. We need $N=N^T$. This comes from $N\in \mathcal L(SL(2,\mathbb C))$ and $\det M = 1 \Rightarrow N=N^T$. See Aitchison.}
+% % 
+% % 
+% % 
+% % % This is actually wrong, the dag doesn't act on N.
+% % % In light of our previous info box, one might feel like we ought to be very explicit if the right-hand side of the above equation should have a dagger or a star. Actually, after spending all that time being pedantic, it doesn't matter. We know that under a Lorentz transformation, $\overline \psi_{\dot\alpha} \rightarrow (N^*)_{\dot\alpha}^{\phantom\alpha\dot\beta}\overline\psi_{\dot\beta}$. This seems awkward if we want to associate $\overline\psi$ with $\psi^\dag$. Recall, however, that $N\in \mathcal L(SL(2,\mathbb C))$. Elements of the \textit{group} $SL(2,\mathbb C)$ have unit determinant, so elements of the \textit{algebra} $\mathcal L(SL(2,\mathbb C))$ have the property $N=N^T$. Thus we may swap $N^*$ with $N^\dag$ and we may equivalently write either $\overline \psi$ or $\psi^\dag$ consistently.
+% % 
+% % 
+% %
+
+\section{Tensor representations}
+
+% \vspace{.5em}
+% \begin{framed}
+% 	\noindent\textbf{A note on tensor representations}. 
+Now that we've said a few things about raised/lowered and dotted/undotted indices, it's worth repeating the mantra of tensor representations of Lie groups: \textit{symmetrize, antisymmetrize, and trace} (see, for example, Section 4.3 of Cheng and Li \cite{chengandli}). Let's recall the familiar $SU(N)$ case. We can write down tensor representations by just writing out the appropriate indices, e.g. if $\psi^a \to U^a_{\phantom a b}\psi^b$ and $\psi_a \to U^{\dag\phantom a b}_{\phantom\dag a}\psi_b$, then we can write an $(n,m)$-tensor $\Psi$ and its transformation as
+	\begin{align}
+		\Psi^{i_1\cdots i_m}_{\phantom{i_1\cdots i_m}j_1\cdots j_m} \to U^{i_1}_{\phantom{i_1}i'_1}\cdots U^{i_n}_{\phantom{i_n}i'_n} U^{\dag\phantom{j_1} j'_1}_{\phantom\dag j_1}\cdots U^{\dag\phantom{j_m} j'_m}_{\phantom\dag j_m} \Psi^{i'_1\cdots i'_m}_{\phantom{i'_1\cdots i'_m}j'_1\cdots j'_m}.
+	\end{align} 
+This, however, is not generally an irreducible representation. In order to find the irreps, we can make use of the fact that tensors of symmetrized/antisymmetrized indices don't mix under the matrix symmetry group. For $U(N)$,
+\begin{align}
+	\Psi^{ij}\to \Psi'^{ij} &= U^i_{\phantom i k} U^j_{\phantom j \ell} \Psi^{k\ell}\\
+	\Psi^{ji}\to \Psi'^{ji} &= U^j_{\phantom j \ell} U^i_{\phantom i k} \Psi^{\ell k}\\
+	&= U^i_{\phantom i k} U^j_{\phantom j \ell} \Psi^{\ell k},
+\end{align}
+thus if $P(i,j)$ is the operator that swaps the indices $i \leftrightarrow j$, then $\Psi^{ij}$ and $\Psi^{ji} = P(i,j)\Psi^{ij}$ transform in the same way. In other words, $P(i,j)$ commutes with the matrices of $U(N)$, and hence we may construct simultaneous eigenstates of each. This means that the eigenstates of $P(i,j)$, i.e. symmetric and antisymmetric tensors, form invariant subspaces under $U(N)$. This argument is straightforwardly generalized to any matrix group and arbitrarily complicated index structures. Thus we may commit to memory an important lesson: we ought to symmetrize and antisymmetrize our tensor representations. 
+
+%\noindent 
+As with any good informercial, one can expect a ``but wait, there's more!'' deal to spice things up a little bit. Indeed, it turns our there are two more tricks we can invoke to further reduce our tensor reps. The first is taking the trace. For  $U(N)$ this is somewhat obvious once it's suggested: we know from basic linear algebra that the trace is invariant under unitary rotations; it is properly a scalar quantity. What this amounts to for a general tensor is taking the contraction of an upper index $i$ and lower index $j$ with the Kronecker delta, $\delta^j_i$. This is guaranteed to commute with the symmetry group because $\delta^j_i$ is invariant under $U(N)$. This is analogous to $\epsilon_{\alpha\beta}$ being an invariant tensor of $SL(2,\mathbb{C})$.
+
+There's one more trick for $SU(N)$ (but not $U(N)$) which comes from another invariant tensor, $\epsilon_{i_1\cdots i_N}$. This is invariant under $SU(N)$ since
+\begin{align}
+	U_{i_1}^{i'_1}\cdots U_{i_N}^{i'_N} \epsilon_{i'_1\cdots i'_N} &= \det U \epsilon_{i_1\cdots i_N} = \epsilon_{i_1\cdots i_N}.
+\end{align} 
+Thus any time one has $N$ antisymmetric indices of an $U(N)$ tensor, one can go ahead and drop them. Just like that. 
+Note that this is \textit{totally different} from the $\epsilon_{\alpha\beta}$ of $SL(2,\mathbb{C})$.
+
+By now, the slightly more group theoretically savvy will have recognized the basic rules for $U(N)$ Young tableaux. This formalism further allows one to formulaically determine the dimension of a tensor representation and its decomposition into irreducible representations. Details for the $SU(N)$ Young tableaux are worked out in Cheng and Li \cite{chengandli}, with a more general discussion in any self-respecting representation theory text. 
+
+% See Osborn
+
+The points that one should take away from this, however, isn't the formalism of Young tableaux, but rather the `big picture' intuition of decomposing into irreducible tensors. In particular for $SL(2,\mathbb{C})$ the irreducible two-index $\epsilon$ tensor tells us that we can always reduce any tensorial representation into direct sums irreducible tensors which are symmetric in their dotted and (separately) undotted indices,
+\begin{align}
+	\Psi_{\alpha_1\cdots\alpha_{2n} \dot\alpha_1\cdots\dot\alpha_{2m}} = 
+	\Psi_{(\alpha_1\cdots\alpha_{2n}) (\dot\alpha_1\cdots\dot\alpha_{2m})}.
+\end{align}
+%
+We label such an irreducible tensor-of-spinor-indices with the $SO(3,1)$ notation ($n,m$). In this notation the fundamental left- ($\psi$) and right-handed ($\bar\chi$) spinors transform as ($\frac 12$,0) and (0,$\frac 12$) respectively. One might now want to consider how to reduce Poincare tensor products following the analogous procedure that textbooks present for $SU(2)$. Recall that $SO(3)\cong SU(2)/\mathbbm{Z}_2$ so that such an analogy amounts to `promoting' $SO(3)$ to $SO(3,1)$. For further details see, e.g., Osborn's lecture notes \cite{Osborn:Symmetries}.
+
+
+% \end{framed}
+% \vspace{.5em}
+% % 
+
+\section{Lorentz-Invariant Spinor Products}
+
+Armed with a metric to raise and lower indices, we can also define the inner product of spinors as the contraction of upper and lower indices. Note that in order for inner products to be Lorentz-invariant, one cannot contract dotted and undotted indices. 
+
+There is a very nice short-hand that is commonly used in supersymmetry that allows us to drop contracted indices. Since it's important to distinguish between left- and right-handed Weyl spinors, we have to be careful that dropping indices doesn't introduce an ambiguity. This is why right-handed spinors are barred in addition to having dotted indices. Let us now define the contractions
+\begin{align}
+	\psi\chi &\equiv \psi^\alpha\chi_\alpha\label{eq:susyalg:undotted}\\
+	\overline\psi\overline\chi &\equiv \overline\psi_{\dot\alpha}\overline\chi^{\dot\alpha}\label{eq:susyalg:dot}.
+\end{align}
+Note that the contractions are different for the left- and right-handed spinors. A useful mnemonic is to imagine swordsman who carries his/her sword along his waist. A right-handed swordsman would have his sword along his left leg so that he could easily unsheathe it by pulling up and to the right---just like the way the right-handed dotted Weyl spinor indices contract. Similarly, a left-handed swordsman would have his sword along his right leg so that he would unsheathe by pulling up and to the left.
+
+This is a choice of convention such that
+\begin{align}
+	(\psi\chi)^\dag \equiv (\psi^\alpha\chi_\alpha)^\dag = \overline\chi_{\dot\alpha}\overline\psi^{\dot\alpha} \equiv \overline\chi\overline\psi = \overline\psi\overline\chi.
+\end{align}
+The second equality is worth explaining. Why is it that $(\psi^\alpha\chi_\alpha)^\dag = \overline\chi_{\dot\alpha}\overline\psi^{\dot\alpha}$? Recall from that the Hermitian conjugation acts on the creation and annihilation operators in the quantum fields $\psi$ and $\chi$. The Hermitian conjugate of the product of two Hermitian operators $AB$ is given by $B^\dag A^\dag$. The coefficients of these operators in the quantum fields are just $c$-numbers (`commuting' numbers), so the conjugate of $\psi^\alpha\chi_\alpha$ is $\left(\chi^\dag\right)_{\dot\alpha}\left(\psi^\dag\right)^{\dot\alpha}$.
+
+% % %
+Now let's get back to our contraction convention. Recall that quantum spinor fields are Grassmann, i.e. they anticommute. Thus we show that with our contraction convention, the order of the contracted fields don't matter:
+\begin{align}
+	\psi\chi = \psi^\alpha\chi_\alpha = -\psi_\alpha\chi^\alpha = \chi^\alpha\psi_\alpha = \chi\psi\label{eq:SUSYalg:contractions}\\
+	\overline\psi\overline\chi = \overline\psi_{\dot\alpha}\overline\chi^{\dot\alpha}= -\overline\psi^{\dot\alpha}\overline\chi_{\dot\alpha} = \overline\chi_{\dot\alpha}\overline\psi^{\dot\alpha}=\overline\chi\overline\psi.\label{eq:SUSYalg:overlinecontractions}
+\end{align} 
+
+% SEE PAGE 39 of Aitchison ... this is rather cute, I might as well show things explicitly
+
+% \emph{\textbf{FLIP:} Now we streamline notation a bit and say that an unindexed $\chi$ has a lower index and an unindexed $\psi$ has an upper index.}
+% 
+% We can now take inner products... now also we define unindexed spinors.
+% 
+% \begin{align}
+% 	\chi \psi &\equiv \chi^\alpha\psi_\alpha\\
+% 	&= \epsilon^{\alpha\beta}\epsilon_{\alpha\gamma}\chi_\beta\psi^\gamma\\
+% 	&= -\delta^\beta_{\phantom\beta\gamma}\chi_\beta\psi^\gamma\\
+% 	&= -\chi_\gamma\psi^\gamma\\
+% 	\overline\chi\overline\psi &\equiv \overline \chi_{\dot\alpha}\overline\psi^{\dot\alpha}\\
+% 	&= -\overline\chi^{\dot\alpha}\overline\psi_{\dot\alpha}
+% \end{align}
+
+It is actually rather important that quantum spinors anticommute. If the $\psi$ were \emph{commuting} objects, then
+\begin{align}
+	\psi^2 &= \psi\psi = \epsilon^{\alpha\beta}\psi_\beta\psi_\alpha = \psi_2\psi_1-\psi_1\psi_2 =0.
+\end{align}
+Thus we must have $\psi$ such that
+\begin{align}
+	\psi_1\psi_2 = -\psi_2\psi_1,
+\end{align}
+i.e. the components of the Weyl spinor must be Grassmann. 
+So one way of understanding why spinors are anticommuting is that metric that raises and lowers the indices is antisymmetric. (We know, of course, that from another perspective this anticommutativity comes from the quantum creation and annihilation operators.)
+
+
+% % %% I DERIVE THIS IN THE SUPERSPACE section, SO NO NEED TO MENTION IT NOW:
+% % % Finally, we note a handy equality that stems from spinor antisymmetry:
+% % % \begin{align}
+% % % 	\psi_\alpha\psi_\beta &= \frac 12 \epsilon_{\alpha\beta}\psi\psi.
+% % % \end{align}
+% % 
+% % % 
+% % % \vspace{.5em}
+% % % \begin{framed}
+% % % 	\noindent{In other words.} If this is a bit abstract, we can look at this more concretely by following the analysis of Aitchison p. 23 - 24. 
+% % % \end{framed}
+% % % \vspace{.5em}
+% % 
+% % 
+% % 
+\section{Vector-like Spinor Products}
+
+Notice that the Pauli matrices give a natural way to go between $SO(3,1)$ and $SL(2,\mathbb C)$ indices. Using  (\ref{eq:SUSYalg:SL2C:Lorentz}),
+\begin{align}
+	(x_\mu\sigma^\mu)_{\alpha\dot\alpha} &\rightarrow N_\alpha^{\phantom\alpha\beta}(x_\nu\sigma^\nu)_{\beta\dot\gamma}N^{*\phantom{\dot\alpha}\dot\gamma}_{\phantom *\dot\alpha}\\
+	&= (\Lambda_\mu^{\phantom\mu\nu}x_\nu)\sigma^\mu_{\phantom\mu\alpha\dot\alpha}.
+\end{align}
+Then we have
+\begin{align}
+	(\sigma^\mu)_{\alpha\dot\alpha} &= N_\alpha^{\phantom\alpha\beta}(\sigma^\nu)_{\beta\dot\gamma}(\Lambda^{-1})^\mu_{\phantom\mu\nu}N^{*\phantom{\dot\alpha}\dot\gamma}_{\phantom*\dot\alpha}.
+\end{align}
+One could, for example, swap between the vector and spinor indices by writing
+\begin{align}
+	V_\mu & \rightarrow V_{\alpha\dot\beta} \equiv V_\mu (\sigma^\mu)_{\alpha\dot\beta}.\label{eq:SUSYalg:vecspinor}
+\end{align} 
+We can define a `raised index' $\sigma$ matrix,
+\begin{align}
+	(\overline\sigma^\mu)^{\dot\alpha\alpha} &\equiv \epsilon^{\alpha\beta}\epsilon^{\dot\alpha\dot\beta}(\sigma^\mu)_{\beta\dot\beta}\label{eq:SUSYalg:sigmamu}\\
+%	&= (\sigma^\mu)^\dag\\
+	&= (\mathbbm 1, -{\mathbf{\sigma}}).\label{eq:SUSYalg:sigma-bar}
+\end{align}
+Note the bar and the reversed order of the dotted and undotted indices. The bar is just notation to indicate the index structure, similarly to the bars on the right-handed spinors. 
+
+Now an important question: How do we understand the indices? Why do we know that the un-barred Pauli matrices have lower indices $\alpha\dot\alpha$ while the barred Pauli matrices have upper indices $\dot\alpha\alpha$? Clearly this allows us to maintain our convention about how indices contract, but some further checks might help clarify the matter. Let us go back to the matrix form of the Pauli matrices (\ref{eq:SUSYalg:pauli:matrices}) and the upper-indices epsilon tensor (\ref{eq:SUSYalg:epsilonupper}). One may use $\epsilon = i\sigma^2$ and to directly verify that 
+\begin{align}
+	\epsilon\overline\sigma_\mu &= \sigma_\mu^T\epsilon,
+\end{align}
+and hence
+\begin{align}
+	\overline\sigma_\mu &= \epsilon\sigma_\mu^T\epsilon^T.
+\end{align}
+Now let us write these in terms of dot-less indices---i.e. write all indices without dots, whether or not they ought to have dots---then we can restore the indices later to see how they turn out. To avoid confusion we'll write dot-less indices with lowercase Roman letters $\alpha,\beta,\gamma,\delta \rightarrow a,b,c,d$.
+\begin{align}
+	(\overline \sigma^\mu)^{ad} &= \epsilon^{ab}(\sigma^{\mu T})_{bc}(\epsilon^T)^{cd}\\
+	&= \epsilon^{ab}(\sigma^\mu)_{cb} \epsilon^{dc}\\
+	&= \epsilon^{ab}\epsilon^{dc}(\sigma^\mu)_{cb}.
+\end{align}
+We already know what the dot structure of the $\sigma^\mu$ is, so we may go ahead and convert to the dotted/undotted lowercase Greek indices. Thus $c,b \rightarrow \gamma,\dot\beta$. Further, we know that the $\epsilon$s carry only one type of index, so that $a,d \rightarrow \dot\alpha,\delta$. 
+% Restoring indices on the right-hand side,
+% \begin{align}
+% 	 \epsilon\sigma_\mu^T\epsilon^T  &\rightarrow \epsilon^{\alpha\beta}(\sigma^{\mu T})_{\beta\dot\beta}(\epsilon^T)^{\dot\beta\dot\alpha}\\
+% 	&\rightarrow \epsilon^{\alpha\beta}\epsilon^{\dot\alpha\dot\beta}(\sigma^{\mu})_{\dot\beta\beta}.
+% \end{align}
+%We'll get to this in \section \ref{sec:SUSYalg:sec:chirality}.
+Thus we see that the $\overline\sigma^\mu$ have a dotted-then-undotted index structure. A further consistency check comes from looking at the structure of the $\gamma$ matrices as applied to the Dirac spinors formed using Weyl spinors with our index convention. We do this in Section \ref{sec:SUSYalg:sec:chirality}. 
+
+\section{Generators of $SL(2,\mathbb{C})$}
+
+
+How do Lorentz transformations act on Weyl spinors? We should already have a hint from the generators of Lorentz transformations on Dirac spinors. (Go ahead and review this section of your favorite QFT textbook.) The objects that obey the Lorentz algebra,  (\ref{eq:SUSYalg:Poincare:alg:1}), and generate the desired transformations are given by the matrices,
+\begin{align}
+	(\sigma^{\mu\nu})_\alpha^{\phantom\alpha\beta} &= \frac i4(\sigma^\mu\overline\sigma^\nu-\sigma^\nu\overline\sigma^\mu)_\alpha^{\phantom\alpha\beta}\label{eq:SUSYalg:sigmamunu}\\
+	(\overline\sigma^{\mu\nu})^{\dot\alpha}_{\phantom{\dot\alpha}\dot\beta} &= \frac i4 (\overline \sigma^\mu\sigma^\nu - \overline\sigma^\nu\sigma^\mu)^{\dot\alpha}_{\phantom{\dot\alpha}\dot\beta}\label{eq:SUSYalg:sigmabarmunu}.
+\end{align}
+It is important to note that these matrices are Hermitian. (Some sources will define these to be anti-Hermitian, see below.) The assignment of dotted and undotted indices are deliberate; they tell us which generator corresponds to the fundamental versus the conjugate representation. The choice of \emph{which} one is fundamental versus conjugate, of course, is arbitrary. 
+Thus the left and right-handed Weyl spinors transform as
+\begin{align}
+	\psi_\alpha &\rightarrow \left(e^{-\frac i2 \omega_{\mu\nu}\sigma^{\mu\nu}}\right)_\alpha^{\phantom\alpha\beta}\psi_\beta\label{eq:SUSYalg:alphatransform}\\
+	\overline\chi^{\dot\alpha} &\rightarrow \left(e^{-\frac i2 \omega_{\mu\nu}\overline\sigma^{\mu\nu}}\right)^{\dot\alpha}_{\phantom\alpha\dot\beta}\overline\chi^{\dot\beta}.\label{eq:SUSYalg:alphadottransform}
+\end{align}
+
+\vspace{.5em}
+\begin{framed}
+\noindent\textbf{``In the kingdom of the blind, the one-$i$'d man is king.''} (D. Erasmus.) Note that some standard references (such as Bailin \& Love \cite{Bailin:1994qt}) define $\sigma^{\mu\nu}$ and $\overline\sigma^{\mu\nu}$ without the leading factor of $i$. Their spinor transformations thus also lack the $(-i)$ in the exponential so that the actual quantity being exponentiated is the same in either convention. As much as it pains me---and it will certainly pain \textit{you} even more---to differ from `standard notation', we will be adamant about our choice since only then do our Lorentz transformations take the usual format for exponentiating Lie algebras:
+	\begin{align}
+		e^{i\cdot(\mathbb R\,\text{Transformation Parameter})\cdot(\text{Hermitian Generator})}.
+	\end{align} 
+Thus propriety demands that we define \textit{Hermitian} $\sigma^{\mu\nu}$ as in  (\ref{eq:SUSYalg:sigmabarmunu}), even if this means having a slightly different algebra from Bailin \& Love. This will only be very important when using the Fierz identities in Section \ref{sec:SUSYalg:Fierz} and Appendix  \ref{chap:identities:fierz}, where one will have to keep track of factors of $i$ relative to the Bailin \& Love notation.
+\end{framed}
+\vspace{.5em}
+
+We can invoke the $SU(2)\times SU(2)$ representation (and we use that word \emph{very} loosely) of the Lorentz group from (\ref{eq:Poincare:J}) and (\ref{eq:Poincare:K}) to write the left-handed $\sigma^{\mu\nu}$ generators as
+\begin{align}
+	J_i &= \frac 12 \epsilon_{ijk}\sigma_{jk} = \frac 12 \sigma_i\label{eq:SUSYalg:Jpauli}\\
+	K_i &= \sigma_{0i} = -\frac i2 \sigma_i.\label{eq:SUSYalg:Kpauli}
+\end{align}
+One then finds
+\begin{align}
+	A_i &= \frac 12 (J_i+iK_i) = \frac 12 \sigma_i\\
+	B_i &= \frac 12 (J_i - iK_i) = 0.
+\end{align}
+Thus the left-handed Weyl spinors $\psi_\alpha$ are $(\frac 12, 0)$ spinor representations Similarly, one finds that the right-handed Weyl spinors $\overline \chi^{\dot\alpha}$ are $(0,\frac 12)$ spinor representations.
+
+Alternately, we could have \textit{guessed} the generators of the Lorentz group acting on Weyl spinors from the algebra of rotations and boosts in (\ref{eq:SUSYalg:JJ}) -- (\ref{eq:SUSYalg:JK}). With a modicum of cleverness one could have made the ansatz that the $\mathbf J$ and $\mathbf K$ are represented on Weyl spinors via (\ref{eq:SUSYalg:Jpauli}) and (\ref{eq:SUSYalg:Kpauli}). From this one could exponentiate to derive a finite Lorentz transformation,
+\begin{align}
+	\exp\left({\frac i2 \vec\sigma\cdot\vec\theta \pm \frac 12 \vec\sigma\cdot\vec\phi}\right) &= \exp\left({i\frac 12 \vec\sigma\cdot(\vec\theta \mp i\vec\phi)}\right),
+\end{align}
+where the upper sign refers to left-handed spinors while the lower sign refers to right-handed spinors. $\vec \theta$ and $\vec \phi$ are the parameters of rotations and boosts, respectively. One can then calculate the values of $\sigma^{0i}$ and $\sigma^{ij}$ to confirm that they indeed match the above expression.
+
+\vspace{.5em}
+\begin{framed}
+	\noindent\textbf{Representations of the Lorentz group.} %
+	% From Peskin, Weinberg
+	It is worth making an aside about the representations of the Lorentz group since there is a nice point that is often glossed over during one's first QFT course; see, for example, section 3.2 of Peskin \cite{Peskin:1995ev}. Dirac's trick for finding $n$-dimensional representations of the Lorentz generators was to postulate the existence of $n\times n$ matrices $\gamma^\mu$ that satisfy the Clifford algebra,
+	\begin{align}
+		\{\gamma^\mu,\gamma^\nu\} = 2\eta^{\mu\nu}\cdot\mathbbm 1_{n\times n}.
+	\end{align}
+One can then use this to explicitly show that such matrices satisfy the algebra of the Lorentz group,  (\ref{eq:SUSYalg:Poincare:alg:1}). You already know that for $n=4$ in the Weyl representation of  (\ref{eq:SUSYalg:gamma:weylrep}), this construction is explicitly reducible into the left- and right-handed Weyl representations and we see that we get the appropriate generators are indeed what we defined to be $\sigma^{\mu\nu}$ and $\overline\sigma^{\mu\nu}$. We could have constructed the $n=2$ generators directly, but this would then lead to a factor of $i$ in the definition of $\vec\sigma$. 
+\end{framed}
+\vspace{.5em}
+
+
+
+\section{Chirality}\label{sec:SUSYalg:sec:chirality}
+
+Now let's get back to a point of nomenclature. Why do we call them left- and right-handed spinors? The Dirac equation tells us%\footnote{To be clear, there's some arbitrariness here. How do we know which `Dirac equation' (i.e. with $\sigma$ or $\overline\sigma$) to apply to $\psi$ (the fundamental rep) versus $\overline\chi$ (the conjugate rep)? This is convention, `by the interchangeability of the fundamental and conjugate reps' and `the interchangeability of $\sigma$ and $\overline\sigma$' if you wish. Once we have chosen the convention of  (\ref{eq:susyalg:dirac2fund}), then  (\ref{eq:susyalg:dirac2anti}) follows from Hermitian conjugation. In other words, once we've chosen that the fundamental representation goes with the `$\sigma$' Dirac equation (\ref{eq:susyalg:dirac2fund}), we know that the conjugate representation goes with the `$\overline\sigma$' Dirac equation (\ref{eq:susyalg:dirac2anti}). If you ever get confused, check the index structure of $\sigma$ and $\overline\sigma$ and make sure they are contracting honestly.}
+\begin{align}
+	p_\mu\sigma^\mu \psi &= m \psi\label{eq:susyalg:dirac2fund}\\
+	p_\mu\overline\sigma^\mu \overline\chi &= m \overline\chi\label{eq:susyalg:dirac2anti}.
+\end{align}
+% From Aitchison
+Equation (\ref{eq:susyalg:dirac2anti}) follows from  (\ref{eq:susyalg:dirac2fund}) via Hermitian conjugation, as appropriate for the conjugate representation. 
+
+In the massless limit, then, $p^0\rightarrow |\mathbf p|$ and hence 
+\begin{align}
+	\left(\frac{\mathbf\sigma\cdot\mathbf p}{|\mathbf{p}|}\psi\right) &= \phantom+ \psi\\
+	\left(\frac{\mathbf\sigma\cdot\mathbf p}{|\mathbf{p}|}\overline\chi\right) &= -\overline\chi.
+\end{align}
+We recognize the quantity in parenthesis as the helicity operator, so that $\psi$ has helicity +1 (left-handed) and $\overline\chi$ has helicity $-$1 (right-handed). Non-zero masses complicate things, of course. In fact, they complicate things differently depending on whether the masses are Dirac or Majorana. We'll get to this in due course, but the point is that even though $\psi$ and $\overline\chi$ are no longer helicity eigenstates, they are \emph{chirality}\index{chirality} eigenstates:
+\begin{align}
+	\gamma_5\begin{pmatrix}\psi\\0\end{pmatrix} &= -\begin{pmatrix}\psi\\0\end{pmatrix}\\
+	\gamma_5\begin{pmatrix}0\\\overline\chi\end{pmatrix} &=\phantom - \begin{pmatrix}0\\\overline\chi\\\end{pmatrix},
+\end{align}
+where we've put the Weyl spinors into four-component Dirac spinors in the usual way so that we may apply the chirality operator, $\gamma_5$. (See Section \ref{subsec:SUSYalg:DiracSpinors}.)
+
+\vspace{.5em}
+\begin{framed}
+	\noindent\textbf{Chirality}. Keeping the broad program in mind, let us take a moment to note that chirality will play an important role in whatever new physics we might find at the Terascale. The Standard Model is a chiral theory (e.g. $q_L$ and $q_R$ are in different gauge representations), so whatever Terascale completion supersedes it must also be chiral. This is no problem in SUSY where we may place chiral fields into different supermultiplets (`superfields'). In extra dimensions, however, we run into the problem that there is no chirality operator in five dimensions. This leads to a lot of subtlety in model-building. (Not to mention issues with anomaly cancellation.) By the way, it prudence requires that a diligent student should thoroughly understand the difference between chirality and helicity.
+%	
+%	\noindent It is assumed that the reader can distinguish between helicity and chirality. If not, then s/he is kindly requested to review this for posterity's sake.
+\end{framed}
+\vspace{.5em}
+
+% % 
+
+\section{Fierz Rearrangement}\label{sec:SUSYalg:Fierz}
+
+Fierz identities\index{Fierz identity} are useful for rewriting spinor operators by swapping the way indices are contracted. For example,
+\begin{align}
+	(\chi\psi)(\chi\psi) &= -\frac 12 (\psi\psi)(\chi\chi)\label{eq:SUSYalg:Fierz:alphaalphadot}.
+\end{align}
+%
+One can understand these Fierz identities as an expression of the decomposition of tensor products in group theory. For example, we could consider the decomposition $(\frac 12,0)\otimes(0,\frac 12)=(\frac 12, \frac 12)$:
+\begin{align}
+	\psi_\alpha\overline\chi_{\dot\alpha} &= \frac 12 (\psi\sigma_\mu\overline\chi)\sigma^{\mu}_{\phantom\mu\alpha\dot\alpha},\label{eq:SUSYalg:fierz:sigma}
+\end{align}
+where, on the right-hand side, the object in the parenthesis is a vector in the same sense as  (\ref{eq:SUSYalg:vecspinor}). The factor of $\frac 12$ is, if you want, a Clebsch-Gordan coefficient.
+
+Another example is the decomposition for $(\frac 12,0)\otimes(\frac 12,0)=(0,0)+(1,0)$:
+\begin{align}
+	\psi_\alpha\chi_\beta &= \frac 12 \epsilon_{\alpha\beta}(\psi\chi) + \frac 12 (\sigma^{\mu\nu}\epsilon^T)_{\alpha\beta}(\psi\sigma_{\mu\nu}\chi).
+\end{align}
+Note that the $(1,0)$ rep is the antisymmetric tensor representation. All higher dimensional representations can be obtained from products of spinors. Explicit calculations can be found in the lecture notes by M\"uller-Kirsten and Wiedemann \cite{MullerKirsten:1986cw}.
+
+These identities are derived from completeness relations for the basis $\{\sigma^\mu\}$ of $2\times 2$ complex matrices. Using  (\ref{eq:SUSYalg:sl2ctom4}), we may write a generic $SL(2,\mathbb C)$ matrix $\mathbf x$ as 
+% \begin{align}
+% 	\mathbf{x} &= x_\mu\sigma^\mu\\
+% 	 			&= \frac 12\Tr(\mathbf x) \sigma^0 + \frac 12\Tr(\mathbf x\sigma^i)\sigma^i\\
+% 	(\mathbf{x})_{\alpha\beta} &= \frac 12 (\mathbf x)_{\gamma\gamma}\delta_{\alpha\beta} + \frac 12 
+% (\mathbf x)_{\gamma\delta}(\sigma^i)_{\delta\gamma}(\sigma^i)_{\alpha\beta},\label{eq:SUSYalg:completeness1}
+% \end{align}
+\begin{align}
+	\mathbf{x} &= x_\mu\sigma^\mu\\
+	 			&= \frac 12\text{Tr}(\mathbf x) \sigma^0 + \frac 12\text{Tr}(\mathbf x\sigma^i)\sigma^i\\
+	(\mathbf{x})_{ac} &= \frac 12 (\mathbf x)_{zz}\delta_{ac} + \frac 12 
+(\mathbf x)_{yz}(\sigma^i)_{zy}(\sigma^i)_{ac},\label{eq:SUSYalg:completeness1}
+\end{align}
+where we sum over repeated indices and we are using lower-case Roman indices to emphasize that this is a \textit{matrix} relation. The above statement knows nothing about metrics or raised/lowered indices or representations of $SL(2,\mathbb C)$; it's just a fact regarding the multiplication these particular $2\times 2$ matrices together. We already know the canonical index structure of $\sigma$ matrices so we can later make this statement `$SL(2,\mathbb C)$-covariant.' First, though, we take $\mathbf x$ to be one of the canonical basis elements of the space of $2\times 2$ matrices, $\mathbf x = \mathbf e_{bd}$ with index structure $(\mathbf e_{bd})_{ac} = \delta_{ab}\delta_{cd}$. Thus we may write  (\ref{eq:SUSYalg:completeness1}) as
+\begin{align}
+	\delta_{ab}\delta_{cd} &= \frac 12 \delta_{zb}\delta_{zd}\delta_{ac} - \frac 12 \delta_{yb}\delta_{zd}(\sigma^i)_{zy}(\sigma^i)_{ac}\\
+		&= \frac 12 \delta_{ac}\delta_{db} + \frac 12 (\sigma^i)_{ac}(\sigma^i)_{db}.\label{eq:SUSYalg:sigma:completeness}
+\end{align}
+Now remembering the \textit{matrix} definition of $\overline\sigma$, i.e.  (\ref{eq:SUSYalg:sigma-bar}) rather than (\ref{eq:SUSYalg:sigmamu}), we may write
+\begin{align}
+	\delta_{ab}\delta_{cd} &= \frac 12 \delta_{ac}\delta_{db} - \frac 12 (\sigma^i)_{ac}(\overline\sigma^i)_{db}\\
+	&= \frac 12 \delta_{ac}\delta_{db} + \frac 12 (\sigma^i)_{ac}(\overline\sigma_i)_{db}\\
+	&= \frac 12 (\sigma^\mu)_{ac}(\overline\sigma_\mu)_{db},
+\end{align}
+where we have now used the Minkowski space metric to lower the contracted index and combine both terms. Let's now promote this from a matrix equation to an  $SL(2,\mathbb C)$ covariant equation by raising and dotting indices according to the conventions for $\sigma^\mu$ and $\overline\sigma^\mu$. We shall also now use our conventional $SL(2,\mathbb C)$ lower-case Greek indices. We find
+\begin{align}
+	\delta_\alpha^{\phantom\alpha\beta}\delta_{\dot\gamma}^{\phantom\gamma\dot\delta} &= \frac 12 (\sigma^\mu)_{\alpha\dot\gamma}(\overline\sigma_\mu)^{\delta\dot\beta}.\label{eq:SUSYalg:sigma:fierz}
+\end{align}
+Upon contracting indices with the appropriate spinors, this is precisely  (\ref{eq:SUSYalg:fierz:sigma}). This relation can now be used to generate further Fierz identities, as the eager student may check independently. It is useful to remember the general structure of this `mother' Fierz identity. On the left-hand side we have two Kronecker $\delta$s, one with undotted indices and the other with dotted indices. As usual both $\delta$s have one upper and one lower index. On the right-hand side we have two Pauli `four-matrices,' one barred and the other unbarred with their vector index contracted. The indices on the right-hand side is fixed by the index structure on the left-hand side, so this is actually rather trivial to write down. Just don't forget the factor of one-half. (As with many of the metric identities, one can easily obtain the overall normalization by tracing both sides.)
+
+
+% \vspace{.5em}
+% \begin{framed}
+% \noindent\textbf{How to properly write this Fierz Identity}. Let's make a rather pedantic point about notation. The form of the `mother' Fierz identity in  (\ref{eq:SUSYalg:sigma:fierz}) is what one should use to derive further Fierz identities since all indices are explicit. However, if one wanted to write down a list of useful identities---as we do in \Appendix \ref{chap:identities:fierz} and as Bailin \& Love \cite{Bailin:1994qt} do in their appendix---one would instead write out the explicit spinors, i.e.
+% 	\begin{align}
+% 		\psi_\alpha\overline\chi^{\dot\gamma} &= \frac 12 (\sigma^\mu\overline\chi)_\alpha(\overline\sigma_\mu\psi)^{\dot\gamma}.
+% 	\end{align}
+% This is more useful than  (\ref{eq:SUSYalg:sigma:fierz}) since that equation still had a lot of freedom to re-order indices. For example, one could have written the left-hand side of  (\ref{eq:SUSYalg:sigma:completeness}) as any of
+% \begin{align}
+% 	\delta_{\alpha\delta}\delta_{\beta\gamma} = \delta_{\delta\alpha}\delta_{\beta\gamma} = \delta_{\alpha\delta}\delta_{\gamma\beta} = \delta_{\delta\alpha}\delta_{\gamma\beta} = \delta_{\beta\gamma}\delta_{\alpha\delta} = \cdots
+% \end{align}
+% \end{framed}
+% \vspace{.5em}
+
+% Before you rush off and compare this to the completeness relation listed in the\SUSY literature (i.e. before you accuse me of lying to you), it's worth noting that by the symmetry of the Kronecker $\delta$ we can of course swap $\alpha$ with $\delta$ and/or $\dot\beta$ with $\dot\gamma$ on the left-hand side while leaving them in the same order on the right-hand side. Further, we could have assigned either $\sigma^i$ to have gotten a lower-index and a bar. Thus we in fact we could have written our completeness relation with different index structures, such as ***: Rewrite the following!! ***
+% \begin{align}
+% 	\delta_\alpha^{\phantom\alpha\beta}\delta_{\dot\gamma}^{\phantom\gamma\dot\delta} &= \frac 12 (\sigma^\mu)_{\gamma\dot\alpha}(\overline\sigma_\mu)^{\dot\beta\dot\delta}\label{eq:SUSYalg:sigma:fierz1}\\
+% 	\delta_\alpha^{\phantom\alpha\beta}\delta_{\dot\gamma}^{\phantom\gamma\dot\delta} &= \frac 12 (\sigma^\mu)_{\gamma\dot\alpha}(\overline\sigma_\mu)^{\dot\beta\dot\delta}\label{eq:SUSYalg:sigma:fierz2}\\
+% 	\delta_\alpha^{\phantom\alpha\beta}\delta_{\dot\gamma}^{\phantom\gamma\dot\delta} &= \frac 12 (\sigma^\mu)_{\gamma\dot\alpha}(\overline\sigma_\mu)^{\dot\beta\dot\delta}\label{eq:SUSYalg:sigma:fierz3}
+% \end{align}
+% 
+% A second set of Fierz identities is formed by using the basis $\{\mathbbm 1, \sigma^{\mu\nu}\}$. *** FLIP: Does anyone know how to do this??? 
+% 
+% %... this procedure, btw, generalizes to SU(N) quite nicely
+% 
+% The main `generating' relations for Fierz identities may be written using Weyl spinors as
+% \begin{align}
+% 	(\theta\phi)(\chi\eta) &= -\frac12 \left[(\theta\eta)(\chi\phi) - (\theta\sigma^{\mu\nu}\eta)(\chi\sigma_{\mu\nu}\phi)\right]\\
+% 	(\theta\phi)(\overline\chi\overline\eta) &= -\frac 12(\theta\sigma^\mu\eta)(\overline\chi\overline\sigma_\mu\phi).
+% \end{align}
+% *** ... How do I prove the first one?! 
+
+A comprehensive list of Fierz identities can be found in Appendix A of Bailin \& Love \cite{Bailin:1994qt}, note the different convention for $\sigma^{\mu\nu}$. A very pedagogical exposition on deriving Fierz identities for Dirac spinors is presented in Nishi \cite{nishi:1160}. 
+
+\section{Connection to Dirac Spinors}\label{subsec:SUSYalg:DiracSpinors}
+
+We would now like to explicitly connect the machinery of two-component Weyl spinors to the four-component Dirac spinors that we (unfortunately) teach our children.
+
+Let us define
+\begin{align}
+	\gamma^\mu & \equiv \begin{pmatrix}0\quad&\sigma^\mu\\\overline\sigma^\mu\quad&0\end{pmatrix}.\label{eq:SUSYalg:gamma:weylrep}
+\end{align}
+This, one can check, gives us the Clifford algebra
+\begin{align}
+	\left\{\gamma^\mu,\gamma^\nu\right\} &= 2\eta^{\mu\nu}\cdot\mathbbm{1}.
+\end{align}
+We can further define the fifth $\gamma$-matrix, the four-dimensional chirality operator,
+\begin{align}
+	\gamma^5 &= i\gamma^0\gamma^1\gamma^2\gamma^3 = \begin{pmatrix}-\mathbbm{1}\quad&0\\0\quad&\mathbbm{1}\end{pmatrix}.
+\end{align}
+% \emph{\textbf{FLIP:} I should say something about the role of $\gamma^5$ as the chirality operator.}
+% 
+% \textbf{FLIP:} I should also explain why dirac spinors in Wess and Bagger are defined with lower undotted and upper dotted index. See page 8 of Bailin and Love. Also gives a way of showing why sigma indice are assigned as they are. Also, why is the dirac spinor composed of an upper index and lower dotted index (or whatever)? Because this is how we defined our contractions.
+
+
+A \textbf{Dirac spinor}\index{spinor!Dirac} is defined, as mentioned above, as the direct sum of left- and right-handed Weyl spinors, $\Psi_D = \psi\oplus\overline\chi$, or
+\begin{align}
+	\Psi_D &= \begin{pmatrix}
+		\psi_\alpha\\\overline\chi^{\dot\alpha}
+	\end{pmatrix}.
+\end{align} 
+The choice of having a lower undotted index and an upper dotted index is convention and comes from how we defined our spinor contractions. The generator of Lorentz transformations takes the form
+\begin{align}
+	\Sigma^{\mu\nu} &= 	\begin{pmatrix}
+							\sigma^{\mu\nu} &\quad 0\\
+							0				&\quad \overline\sigma^{\mu\nu}
+						\end{pmatrix},
+\end{align}
+with spinors transforming as
+\begin{align}
+	\Psi_D &\rightarrow e^{-\frac i2 \omega_{\mu\nu}\Sigma^{\mu\nu}}\Psi_D.
+\end{align}
+
+In our representation the action of the chirality operator is given by $\gamma_5$,
+\begin{align}
+	\gamma^5\Psi_D = \begin{pmatrix}
+		-\psi_\alpha\\\phantom{+}\overline\chi^{\dot\alpha}
+	\end{pmatrix}.
+\end{align} 
+We can then define left- and right-handed projection operators,
+\begin{align}
+	P_{L,R} = \frac 12\left(\mathbbm{1}\mp\gamma^5\right).
+\end{align}
+Using the standard notation, we shall define a barred \textit{Dirac} spinor as $\overline\Psi_D \equiv \Psi^\dag\gamma^0$. Note that this bar has nothing to do with the bar on a Weyl spinor. We can then define a charge conjugation matrix $C$ via $C^{-1}\gamma^\mu C = -(\gamma^\mu)^T$ and the Dirac conjugate spinor $\Psi_D^{\phantom{D}c} = C\overline\Psi_D^{\phantom{D}T}$, or explicitly in our representation,
+\begin{align}
+	\Psi_D^{\phantom{D}c} = \begin{pmatrix}
+		\chi_\alpha \\ \overline\psi^{\dot\alpha}
+	\end{pmatrix}.
+\end{align}
+A \textbf{Majorana spinor}\index{spinor!Majorana} is defined to be a Dirac spinor that is its own conjugate, $\Psi_M = \Psi_M^c$. We can thus write a Majorana spinor in terms of a Weyl spinor,
+\begin{align}
+	\Psi_M &= \begin{pmatrix}
+		\psi_\alpha \\ \overline\psi^{\dot\alpha}
+	\end{pmatrix}.
+\end{align}
+Here our notation is that $\overline\psi = \psi^\dag$, i.e.\ we treat the bar as an operation acting on the Weyl spinor (a terrible idea, but we'll do it just for now).
+One can choose a basis of the $\gamma$ matrices such that the Majorana spinors are manifestly real. Thus this is sometimes called the `real representation' of a Weyl spinor.% Some references use Majorana generators for the SUSY algebra. Those references are stupid and annoying. (*** Flip: change this.)
+%
+Note that a Majorana spinor contains exactly the same amount of information as a Weyl spinor. Some textbooks thus package the Weyl SUSY generators into Majorana Dirac spinors, eschewing the dotted and undotted indices.
+
+
+It is worth noting that in four dimensions there are no Majorana-Weyl spinors. This, however, is a dimension-dependent statement A good treatment of this can be found in the appendix of Polchinksi volume II \cite{Polchinski:1998rr}.
+
+\vspace{.5em}
+\begin{framed}
+	\noindent\textbf{Much ado about dots and bars}. It's worth emphasizing once more that the dots and bars are just book-keeping tools. Essentially they are a result of not having enough alphabets available to write different kinds of objects. The bars on Weyl spinors can be especially confusing for beginning supersymmetry students since one is tempted to associate them with the barred Dirac spinors, $\overline\Psi = \Psi^\dagger \gamma_0$. \emph{Do not make this mistake}. Weyl and Dirac spinors are different objects. The bar on a Weyl spinor has \emph{nothing} to do with the bar on a Dirac spinor. We see this explicitly when we construct Dirac spinors out of Weyl spinors (namely $\Psi = \psi\oplus\overline\chi$), but it's worth remembering because the notation can be misleading. %
+	%
+	\vspace{.5em}
+
+	%
+\noindent In principle $\psi$ and $\overline\psi$ are totally different spinors in the same way that $\alpha$ and $\dot\alpha$ are totally different indices. Sometimes---as we have done above---we may also use the bar as an operation that converts an unbarred Weyl spinor into a barred Weyl spinor. That is to say that for a left-handed spinor $\psi$, we may define $\overline\psi=\psi^\dag$. To avoid ambiguity it is customary---as we have also done---to write $\psi$ for left-handed Weyl spinors, $\overline\chi$ for right-handed Weyl spinors, and $\overline\psi$ to for the right-handed Weyl spinor formed by taking the Hermitian conjugate of the left-handed spinor $\psi$.
+\vspace{.5em}
+	
+	
+	\noindent To make things even trickier, much of the literature on extra dimensions use the convention that $\psi$ and $\chi$ (unbarred) refer to left- and right-`chiral' \textit{Dirac} spinors. Here `chiral' means that they permit chiral zero modes, a non-trivial subtlety of extra dimensional models that we will get to in due course. For now we'll use the `SUSY' convention that $\psi$ and $\overline\chi$ are left- and right-handed Weyl spinors.
+\end{framed}
+\vspace{.5em}
+
+
+
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % 
+% % 
+% % 
+% % 
+
+
+\appendix
+
+\section{Notation and Conventions}
+\label{app:conventions}
+
+
+4D Minkowski indices are written with lower-case Greek letters from the middle of the alphabet, $\mu, \nu, \cdots$. 5D indices are written in capital Roman letters from the middle of the alphabet, $M, N, \cdots$. Tangent space indices are written in lower-case Roman letters from the beginning of the alphabet, $a,b, \cdots$. Flavor indices are written in lower-case Roman letters near the beginning of the alphabet, $i,j,\cdots$.
+
+% We use the particle physics (`West Coast,' mostly-minus) metric for Minkowski space, $(+,-,-,-)$. We will also use the conformally flat AdS$_5$ metric,
+% \begin{align}
+% 	ds^2= \left(\frac{R}{z}\right)^2 \left(\eta_{\mu\nu}dx^\mu dx^\nu - dz^2\right).
+% \end{align} 
+Dirac spinors $\Psi$ are related to left- and right-chiral Weyl spinors ($\chi, \bar\psi$ respectively) via
+\begin{align}
+	\Psi = \begin{pmatrix}
+		\chi \\
+		\bar\psi
+	\end{pmatrix}.
+\end{align}
+Note that sometimes we will write $\Psi=(\psi,\bar\chi)^T$. The point is that un-barred Weyl spinors are---by convention---left-handed while barred spinors are right-handed. 
+Our convention for $\sigma^0$ and the three Pauli matrices $\vec\sigma$ is
+\begin{align}
+	\sigma^0 = 
+	\begin{pmatrix}
+		1 & 0\\
+		0 & 1
+	\end{pmatrix}
+	\quad
+	\sigma^1 = 
+	\begin{pmatrix}
+		0 & 1\\
+		1 & 0
+	\end{pmatrix}
+	\quad
+	\sigma^2 = 
+	\begin{pmatrix}
+		0 & -i\\
+		i & 0
+	\end{pmatrix}
+	\quad
+	\sigma^3 = 
+	\begin{pmatrix}
+		1 & 0\\
+		0 & -1
+	\end{pmatrix}
+\end{align}
+with the flat-space $\gamma$ matrices given by
+\begin{align}
+	\gamma^\mu =
+	\begin{pmatrix}
+		0 & \sigma^\mu \\
+		\bar\sigma^\mu & 0 
+	\end{pmatrix}
+	\quad\quad\quad\quad
+	\gamma^5=
+	\begin{pmatrix}
+		i\mathbbm{1} & 0 \\
+		0 & -i\mathbbm{1}
+	\end{pmatrix},
+\end{align}
+where $\bar\sigma^\mu = (\sigma^0, -\vec\sigma)$.
+This convention for $\gamma^5$ gives us the correct Clifford Algebra. (Note that this differs from the definition of $\gamma^5$ in Peskin \& Schroeder.)
+
+
+
+
+
+
+
+
+
+%
+%\section*{Acknowledgements}
+%
+%
+%%This work is supported in part by 
+%%the \textsc{nsf} grant \textsc{phy}-1316792. 
+%%
+%\textsc{p.t.}\ thanks 
+%\emph{your name here}
+%for useful comments and discussions. 
+%%
+%\textsc{p.t.} thanks the Aspen Center for Physics (NSF grant \#1066293) for its hospitality during a period where part of this work was completed.
+
+%% Appendices
+% \appendix
+
+
+%% Bibliography
+\bibliographystyle{utphys} 	% arXiv hyperlinks
+%\bibliographystyle{utcaps} 	% arXiv hyperlinks
+\bibliography{FlipSUSY}
+
+
+\end{document}
