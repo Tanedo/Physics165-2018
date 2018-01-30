@@ -1,0 +1,136 @@
+\documentclass[12pt]{article}
+%% arXiv paper template by Flip Tanedo
+%% last updated: Dec 2016
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  THE USUAL PACKAGES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{nopageno}
+\usepackage{enumerate}
+\usepackage{parskip}
+
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  PAGE FORMATTING and (RE)NEW COMMANDS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[margin=2cm]{geometry}   % reasonable margins
+
+\graphicspath{{figures/}}	        % set directory for figures
+
+% for capitalized things
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}    
+
+\numberwithin{equation}{section}    % set equation numbering
+\renewcommand{\tilde}{\widetilde}   % tilde over characters
+\renewcommand{\vec}[1]{\mathbf{#1}} % vectors are boldface
+
+\newcommand{\dbar}{d\mkern-6mu\mathchar'26}    % for d/2pi
+\newcommand{\ket}[1]{\left|#1\right\rangle}    % <#1|
+\newcommand{\bra}[1]{\left\langle#1\right|}    % |#1>
+\newcommand{\Xmark}{\text{\sffamily X}}        % cross out
+
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+
+% Commands for temporary comments
+\newcommand{\comment}[2]{\textcolor{red}{[\textbf{#1} #2]}}
+\newcommand{\flip}[1]{{\color{red} [\textbf{Flip}: {#1}]}}
+\newcommand{\email}[1]{\texttt{\href{mailto:#1}{#1}}}
+
+\newenvironment{institutions}[1][2em]{\begin{list}{}{\setlength\leftmargin{#1}\setlength\rightmargin{#1}}\item[]}{\end{list}}
+
+
+\usepackage{fancyhdr}		% to put preprint number
+
+
+
+% Commands for listings package
+%\usepackage{listings}      % \begin{lstlisting}, for code
+%
+% \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+%    sets style to small true-type
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%  HYPERREF  %%%%
+%%%%%%%%%%%%%%%%%%%
+
+%% This package has to be at the end; can lead to conflicts
+\usepackage{microtype}
+\usepackage[
+	colorlinks=true,
+	citecolor=black,
+	linkcolor=black,
+	urlcolor=green!50!black,
+	hypertexnames=false]{hyperref}
+
+
+
+
+
+\begin{document}
+
+
+\begin{center}
+
+    {\Large \textsc{Short HW 4}:
+    \textbf{Leptonic Electroweak Theory}}
+    
+\end{center}
+
+\vskip .4cm
+
+\noindent
+\begin{tabular*}{\textwidth}{rl}
+	\textsc{Course:}& Physics 165, \emph{Introduction to Particle Physics} (2018)
+	\\
+	\textsc{Instructor:}& Prof. Flip Tanedo (\email{flip.tanedo@ucr.edu})
+	\\
+	\textsc{Due by:}& \textbf{Thursday}, February 1
+\end{tabular*}
+
+\noindent
+Note that this short assignment is due in class on Thursday. You have only \emph{two days} to do it. This should be quick, I recommend doing it right after class on Tuesday.
+
+\subsection{Rules of the theory}
+
+You may find previous homework assignments useful. In this problem you will motivate the rules of the unbroken leptonic electroweak theory for a single generation\footnote{The words `unbroken' and the reference to `single generation' are hints that we're going to make things more complicated in the near future.}. Your symmetries are as follows:
+\begin{enumerate}
+	\item Spacetime symmetry: translations in spacetime and Lorentz.
+	\item U(1) hypercharge, gauged.
+	\item SU(2) weak, gauged.
+\end{enumerate}
+Your particle content is:
+\begin{enumerate}
+	\item Hypercharge gauge boson, $B_\mu$, required by the gauged hypercharge symmetry. It is spin-1 with no other charges.
+	\item Electroweak gauge boson, $W^A_\mu$, required by the gauged weak symmetry. It is spin-1 with triplet (adjoint) SU(2) weak charge, $A=1,2,3$.
+	\item A lepton doublet, $L^{a\alpha}$. This is a spin-1/2 fermion that has hypercharge $Y=-1/2$ and is in the doublet (fundamental) representation of SU(2) weak. The two components have special names, $L^1 = \nu_L$ and $L^2 = e_L$.
+	\item A left-handed positron, $\bar E^\alpha$ that has hypercharge $Y=+1$ and carries no SU(2) weak charge. You can think of $\bar E$ as the anti-particle to $(\bar E)^\dag = e_R$, a right-handed electron.
+	\item A Higgs doublet, $H^a$, that has hypercharge $Y=+1/2$ and is in the doublet (fundamental) representation of SU(2) weak. For now we can refer to the components as $H^1$ and $H^2$.
+\end{enumerate}
+Write out all of the allowed three-particle Feynman rules for this theory in terms of $B_\mu$, $W_\mu^A$, $L^{\alpha a}$, $\bar E^\alpha$, and $H^a$. 
+
+\textbf{Extra credit}: write out the allowed three-particle Feynman rules in terms of $B_\mu$, $W_\mu^\pm$, $W^3$, $\nu_L$, $e_L$, $e_R$, and $H^{1,2}$. 
+
+\textbf{Extra credit}: What combination of quantum numbers (charges) in this theory seems to give the correct electric charge `in real life?'
+
+\end{document}
