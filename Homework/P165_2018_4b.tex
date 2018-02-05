@@ -18,6 +18,7 @@
 \usepackage{parskip}
 \usepackage{framed}
 %\usepackage{bbm} 
+\usepackage[normalem]{ulem}
 
 
 \renewcommand{\thesection}{}
@@ -107,11 +108,13 @@
 	\\
 	\textsc{Instructor:}& Prof. Flip Tanedo (\email{flip.tanedo@ucr.edu})
 	\\
-	\textsc{Due by:}& \textbf{Tuesday}, February 6
+	\textsc{Due by:}& \textbf{Tuesday}, February 6 \flip{You can turn it in Thursday}
 \end{tabular*}
 
 \noindent
 This is the main weekly homework set. Unless otherwise stated, give all responses in natural units where $c = \hbar = 1$ and energy is measured in electron volts (usually MeV or GeV). 
+
+\flip{Corrections: 2/5. Thanks to Tommy W.\ and Adam G.}
 
 \subsection{Flavor in the electroweak theory of leptons}
 
@@ -130,13 +133,13 @@ Now assume that the lepton doublet $L$ and the positron $\bar E$ are flavor fund
 \begin{align}
 	L^{\alpha a i} && \bar E^{\alpha j} \ .
 \end{align}
-Identify the particles as follows:
+Identify the particles as follows: \flip{Corrected $i$ and $a$ confusion}
 \begin{align}
 	L^{\alpha(a=1)(i=1)} &= \nu_{eL}^\alpha
 	&
-	L^{\alpha(a=1)(i=2)} &= e_L^\alpha
+	L^{\alpha(a=2)(i=1)} &= e_L^\alpha
 	&
-	L^{\alpha(a=2)(i=1)} &= \nu_{\mu L}^\alpha
+	L^{\alpha(a=1)(i=2)} &= \nu_{\mu L}^\alpha
 	&
 	L^{\alpha(a=2)(i=2)} &= \mu^\alpha
 \end{align}
@@ -199,11 +202,15 @@ Write down the three-particle Feynman rules for the Higgs an two fermions using 
 \textsc{Remark}: Why is this useful? \emph{Most} of the theory respects SU(2)$_L\times$SU(2)$_E$ symmetry. We saw that this leads to certain processes being prohibited. Now there's one piece of the theory that \emph{doesn't} respect SU(2)$_L\times$SU(2)$_E$. That means that any process that violates the big symmetry must be proportional to Yukawa coupling. If the Yukawa coupling is small, then the rate for that process is small. 
 
 
-\subsubsection{SU(2)$_L\times$SU(2)$_E \;\to\; $ U(1)}
+\subsubsection{SU(2)$_L\times$SU(2)$_E$ Breaking}
+
+\flip{2/5: Fixed indices, removed last question}
 
 Assume that $y_{ij'}$ is an arbitrary $2\times 2$ complex matrix. By performing SU(2)$_L\times$SU(2)$_E$ rotation, the Yukawa coupling transforms as:
 \begin{align}
-	L^i y_{ij'}\bar E^{j'} \to L^k (U_L)^k_{\phantom k i} y_{k\ell'} (U_E)^{\ell'}_{\phantom{\ell'} j'} E^{j'} \ ,
+	L^i y_{ij'}\bar E^{j'} 
+	\to 
+	L^i (U_L)^k_{\phantom k i} y_{k\ell'} (U_E)^{\ell'}_{\phantom{\ell'} j'} E^{j'} \ ,
 \end{align}
 in other words, 
 \begin{align}
@@ -213,17 +220,17 @@ This boils down to rotating on the left and on the right by two arbitrary matric
 \begin{itemize}
 	\item In general, can $y_{ij'}$ be diagonalized by this transformation?
 	\item In general, is $y_{ij'}$ proportional to the identity matrix?
-	\item Argue that there is some leftover U(1) charge that is conserved. That is, show that there is some SU(2)$_L\times$SU(2)$_E$ rotation that preserves the diagonalized form of $y_{ij'}$. (\textsc{Hint}: what Abelian \emph{flavor} symmetries are available?)
+	\item \flip{Forget this question}. \textcolor{red}{\sout{Argue that there is some leftover U(1) charge that is conserved. That is, show that there is some SU(2)$_L\times$SU(2)$_E$ rotation that preserves the diagonalized form of $y_{ij'}$. (\textsc{Hint}: what Abelian \emph{flavor} symmetries are available?)}}
 \end{itemize}
 
-Do the leftover symmetries of the dynamics permit $\mu\to e Y$ or $\mu \to e W^3$?
+\textcolor{red}{\sout{Do the leftover symmetries of the dynamics permit $\mu\to e B$ or $\mu \to e W^3$?}}
 
 \textsc{Remark}: We'll wait until next time to show that this can actually happen. First we need to see how fermion masses work out in this theory.
 
 
 \subsection{Gaussian Integrals}
 
-The last theoretical step that we need to develop is an understanding of the \textbf{action}, $S$. Gaussian integrals are one way to build the foundations for this, even though they look like they have nothing to do with anything. Feel free to refer to the Physics 231 (Fall 2017) lecture notes on this topic, where the key steps are outlined. Write them up yourself and understand what each step is doing.
+The last theoretical step that we need to develop is an understanding of the \textbf{action}, $S$. Gaussian integrals are one way to build the foundations for this, even though they look like they have nothing to do with anything. \flip{2/5 hint: P231 lecture notes posted} Feel free to refer to the Physics 231 (Fall 2017) lecture notes\footnote{\url{https://github.com/Tanedo/Physics165-2018/blob/master/Homework/P165_2018_4b_hint.pdf}} on this topic, where the key steps are outlined. Write them up yourself and understand what each step is doing.
 
 \subsubsection{One dimensional Gaussian integrals}
 
@@ -251,17 +258,18 @@ where $\hat A = \text{diag}(\hat a_1, \hat a_2, \cdots, \hat a_N)$. Show that th
 \begin{align}
 	\sqrt{\frac{(2\pi)^N}{\text{det }A}} e^{\frac 12 J_i (A^{-1})^i_{\phantom{i}j} J^j} \ .
 \end{align}
+\flip{2/5 Hint: the indices refer to space. The metric for lowering/raising is $\delta_{ij}$ or $\delta^{ij}$. Equivalently, you can treat all indices as lower.}
 
 \subsubsection{1D Expectation Values}
 
 Define
 \begin{align}
-	\langle x^n \rangle = \int_{\infty}^\infty dx \; x \; e^{-\frac 12 ax^2} \ .
+	\langle x^n \rangle = \int_{\infty}^\infty dx \; x^n \; e^{-\frac 12 ax^2} \ .
 \end{align}
 
 Prove the useful fact:
 \begin{align}
-	\langle x^{2n} \rangle &= \left(-2\frac{d}{da}\right) Z
+	\langle x^{2n} \rangle &= \left(-2\frac{d}{da}\right)^n Z
 	& 
 	Z &= \int_{-\infty}^\infty dx\; p(x) 
 	&
@@ -276,7 +284,7 @@ Prove the useful fact:
 
 \textsc{Remark}: You should feel confident that this is really just asking for features of some \textbf{distribution}, $p(x)$; up to some normalization. Then $\langle x \rangle$ is the mean of the distribution and $\langle x^2 \rangle$ is the standard deviation (maybe squared, maybe with some prefactors... I don't know, do I look like a statistics reference?).  
 
-\subsubsection{N dimensional correlation functions}
+\subsubsection{$N$ dimensional correlation functions}
 
 Now let's get to the main part. Suppose you have some distribution over $N$ variables, $q_i$. We're changing notation for a good reason. The analog of $Z$ is
 \begin{align}
@@ -302,6 +310,20 @@ Show that
 	\langle q_i q_j \rangle = A^{-1}_{ij} \ .
 \end{align}
 \textsc{Hint}: I suggest taking derivatives of $Z$ with respect to $d/dJ^i$ and $d/dJ^j$. 
+
+\flip{2/5, additional hint:} It may be useful to consider the following:
+\begin{align}
+	\frac{\partial}{\partial J^i} J^k &= \delta^k_i 
+	&
+	\frac{\partial}{\partial J^i} J_k &= 
+	\frac{\partial}{\partial J^i}
+	 \delta_{k\ell}J^\ell
+	= \delta_{k\ell} \delta^\ell_i 
+	= \delta_{ki} \ .
+\end{align}
+Or you can just lower all indices. 
+
+\flip{2/5, additional remark:} In case you're worried about the order of indices, you can rest assured that $A$ and $A^{-1}$ are symmetric matrices.
 
 \textsc{Remark}: So what? What the heck is this all good for? This correlation function is related to what fancy people call a \textbf{Green's function}, and what everyone calls a \textbf{propagator}. Imagine that spacetime is a big lattice. Each lattice point can be labelled, $i=1,2,3,\cdots$. 
 %
