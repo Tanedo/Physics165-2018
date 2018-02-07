@@ -1,0 +1,373 @@
+\documentclass[12pt]{article}
+%% arXiv paper template by Flip Tanedo
+%% last updated: Dec 2016
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  THE USUAL PACKAGES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{nopageno}
+\usepackage{enumerate}
+\usepackage{parskip}
+\usepackage{framed}
+%\usepackage{bbm} 
+\usepackage[normalem]{ulem}
+
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  PAGE FORMATTING and (RE)NEW COMMANDS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[margin=2cm]{geometry}   % reasonable margins
+
+\graphicspath{{figures/}}	        % set directory for figures
+
+% for capitalized things
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}    
+
+%\numberwithin{equation}{section}    % set equation numbering
+\renewcommand{\tilde}{\widetilde}   % tilde over characters
+%\renewcommand{\vec}[1]{\mathbf{#1}} % vectors are boldface
+
+\newcommand{\dbar}{d\mkern-6mu\mathchar'26}    % for d/2pi
+\newcommand{\ket}[1]{\left|#1\right\rangle}    % <#1|
+\newcommand{\bra}[1]{\left\langle#1\right|}    % |#1>
+\newcommand{\Xmark}{\text{\sffamily X}}        % cross out
+
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+
+% Commands for temporary comments
+\newcommand{\comment}[2]{\textcolor{red}{[\textbf{#1} #2]}}
+\newcommand{\flip}[1]{{\color{red} [\textbf{Flip}: {#1}]}}
+\newcommand{\email}[1]{\texttt{\href{mailto:#1}{#1}}}
+
+\newenvironment{institutions}[1][2em]{\begin{list}{}{\setlength\leftmargin{#1}\setlength\rightmargin{#1}}\item[]}{\end{list}}
+
+
+\usepackage{fancyhdr}		% to put preprint number
+
+
+
+% Commands for listings package
+%\usepackage{listings}      % \begin{lstlisting}, for code
+%
+% \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+%    sets style to small true-type
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%  HYPERREF  %%%%
+%%%%%%%%%%%%%%%%%%%
+
+%% This package has to be at the end; can lead to conflicts
+\usepackage{microtype}
+\usepackage[
+	colorlinks=true,
+	citecolor=black,
+	linkcolor=black,
+	urlcolor=green!50!black,
+	hypertexnames=false]{hyperref}
+
+
+
+
+
+\begin{document}
+
+
+\begin{center}
+
+    {\Large \textsc{Long HW 5}:
+    \textbf{Quarks}}
+    
+\end{center}
+
+\vskip .4cm
+
+\noindent
+\begin{tabular*}{\textwidth}{rl}
+	\textsc{Course:}& Physics 165, \emph{Introduction to Particle Physics} (2018)
+	\\
+	\textsc{Instructor:}& Prof. Flip Tanedo (\email{flip.tanedo@ucr.edu})
+	\\
+	\textsc{Due by:}& \textbf{Tuesday}, February 13 
+\end{tabular*}
+
+\noindent
+This is the main weekly homework set. Unless otherwise stated, give all responses in natural units where $c = \hbar = 1$ and energy is measured in electron volts (usually MeV or GeV). 
+
+
+
+
+\subsection{Quarks without electroweak symmetry}
+
+\emph{Consider an SU(3) gauge theory with left- and right-handed fermions that are in the fundamental representation.}
+
+The above sentence defines a theory:
+\begin{itemize}
+	\item There is an SU(3) symmetry\footnote{The `defining' representation of the symmetry is $3\times 3$ unitary matrices with determinant equal to one. These act on three-component vectors with complex entries.}.  SU(3) happens to have \emph{eight} objects that generalize the Pauli matrices, $(T^M)^m_{\phantom{m}n}$, where $M\in\{1, \cdots,8\}$ and $m,n\in\{1,2,3\}$. The capital uppercase index corresponds to the \textbf{adjoint} representation, the lowercase indices $m,n$ are the \textbf{fundamental}/\textbf{anti-fundamental} representations. You can also call these the \emph{octet}, \emph{triplet} and \emph{anti-triplet} representations.
+	\item As is always the case for any symmetry, there is an antisymmetric tensor $f^{LMN}$ that connects three adjoint indices. The adjoint indices can be contracted with\footnote{Another way of saying this is that you can contract repeated upper adjoint indices. This is because the adjoint is a real representation. The fundamental and anti-fundamental have to be distinguished as upper/lower indices because they're Hermitian conjugates of one another.} $\delta_{MN}$. For the fundamental indices, SU(3) has the tensors $\varepsilon_{\ell m n}$  and also $\varepsilon^{\ell m n}$---these replace the $\varepsilon_{ab}$ and $\varepsilon^{ab}$ tensors of SU(2). Note that this means you can no longer raise and lower indices using $\varepsilon$.
+	\item Because the theory is a gauge symmetry, we automatically have a massless spin-1 gauge boson in the adjoint representation. We call this the \textbf{gluon}, $G_\mu^M$. 
+	\item The left- and right-handed\footnote{You could also write  $(q_R^\dag)=(\bar q_R)^{\alpha}_n$ if you wanted to write everything in terms of left-handed fermions.} fermions are $(q_L)^{\alpha m}$ and $(q_R)^{\dot\alpha n}$. We call these \textbf{quarks}. These particles are in the fundamental (triplet) of SU(3), the three elements of the triplet are usually called red ($m=1$), green ($m=2$), and blue ($m=3$). Thus we would say $(q_L)^{\alpha (m=2)}$ is a left-handed green quark\footnote{It doesn't actually matter how we assign color names to the indices---SU(3) is an unbroken symmetry so they all behave the same way.}. 
+\end{itemize}
+We call this ``SU(3) color,'' the reason for this is that you can contract three color (fundamental) indices with $\epsilon_{\ell m n}$ to form a color invariant. This is like adding red, green, and blue light together to form white light. 
+
+The point of this SU(3) color gauge symmetry is that each color is preserved. Thus ``blue-ness'' is conserved in any vertex and, thus, through any diagram.
+
+\subsubsection{Three-point interactions}
+
+Write out the SU(3) and Lorentz tensor structure required to construct the following vertices (``Feynman rules''):
+\begin{enumerate}
+	\item[(a)] A vertex connecting a $q_L$, $q_L^\dag$, and a $G$. 
+	\item[(b)] A vertex connecting a $q_R$, $q_R^\dag$, and a $G$. 
+	\item[(c)] A vertex connecting three gluons (you don't have to be precise with the Lorentz tensor structure for this case, let $p_\mu$ represent a momentum flowing into the vertex). 
+\end{enumerate}
+
+\subsubsection{Not three-point interactions}
+
+Explain why you \emph{cannot} form the following three-point vertices:
+\begin{enumerate}
+	\item[(a)] A vertex connecting a $q_L$, $q_R^\dag$, and a $G$. 
+	\item[(b)] A vertex connecting three $q_L$ using $\epsilon_{\ell m n}$ to contract triplet indices.
+\end{enumerate}
+
+\subsubsection{Feynman diagrams}
+\label{sec:gluon}
+
+For our purposes, the gluon is always attached to the $(T^M)^m_{\phantom{m}n}$ tensor. It always appears in this combination:
+\begin{align}
+	G_\mu^M (T^M)^m_{\phantom{m}n} \ ,
+\end{align}
+where we're summing over the upper $M$ indices\footnote{Alternatively, $G_\mu^M \delta_{MN}(T^N)^m_{\phantom{m}n}$, for purists.}. This means that you can think of each of the eight gluons (labelled by $M$) as a combination of a color and anti-color (labelled by $^m$ and $_n$).
+
+Draw the following Feynman diagrams. Label each fermion line with a color (red, green, blue) and label each gluon line with a color/anti-color combination (red/anti-green, for example).  Draw the simplest diagrams for each case.
+\begin{enumerate}
+	\item[(a)] A red $q_L$ and a blue $q_L$ scatter off each other---you end up with a red $q_L$ and a blue $q_L$. Two diagrams (2 vertices each). 
+	\item[(a)] A red $q_L$ and a blue $q_L$ turn into a red $q_R$ and a blue $q_R$. One diagram (2 vertices). 
+	\item[(b)] A red $q_R$ and a green/anti-red gluon turn into a green $q_R$ and  a blue/anti-blue gluon. Two diagrams (two vertices each). 
+\end{enumerate}
+Make sure color is conserved at each vertex.
+
+
+\subsubsection{Not Feynman diagrams}
+
+Explain why you cannot draw the following diagrams:
+\begin{enumerate}
+	\item[(a)] A red $q_L$ and a blue $q_L$ turn into a green $q_L$ and a blue $q_L$. 
+	\item[(b)] A red $q_L$ and a blue $q_L$ turn into a red $q_R$ and a blue $q_L$. 
+	\item[(c)] A blue $q_R$ and a green/anti-red gluon turn into a green $q_R$ and a blue/anti-blue gluon. Two diagrams (two vertices each). 
+\end{enumerate}
+
+
+\subsection{Predicting the existence of color}
+
+Recall from quantum mechanics that the wavefunction of identical fermions has to be antisymmetric. If you exchange two identical fermions, they have to pick up a minus sign. 
+
+The PDG is full or particles that we now know are made out of quarks. Before we knew quarks were real, physical particles, we would use symmetries to classify these particles---even though we didn't know it was the quarks inside these particles that explained the symmetries. 
+
+The $\Delta^{++}$ is a very interesting particle from this point of view. It is composed of three up quarks and has a state with spin $3/2$. This means that the three up quarks are all spin-up. The up quarks are thus indistinguishable from one another in the absence of SU(3) color.
+
+In a few sentences, explain why this motivates the existence of an additional SU(3) color symmetry. Use the $\varepsilon_{\ell m n}$ tensor in your answer.
+
+
+
+%
+%
+%\subsection{Quarks}
+%
+%In the same electroweak theory, let us now introduce three new particles. For now, these have nothing to do with the leptons.
+%\begin{itemize}
+%	\item The \textbf{quark doublet}, $Q^{\alpha a}$ that has $Y=1/6$ and two SU(2) components $Q^{a=1} = u_L$ and $Q^{a=2} = d_L$. 
+%	\item The ``anti-right-handed-up,'' $\bar u_R$ that has $Y=-2/3$ and is an SU(2) singlet.
+%	\item The ``anti-right-handed-down,'' $\bar d_R$ that has $Y=1/3$ and is an SU(2) singlet. 
+%\end{itemize}
+%You know what's going to happen: the $u_L$ and $u_R$ pair up to form massive up quarks, and the $d_L$ and $d_R$ pair up to form massive down quarks. 
+%
+%Recalling that the Higgs has $Y=1/2$ and is an SU(2) doublet, show the index contractions that give mass to the up and down quarks. Use $\langle H \rangle$ as an order parameter for electroweak symmetry breaking. 
+%
+%
+%\subsection{Two generation flavor symmetry, revisited}
+%
+%Recall from long homework 4 that Yukawa interactions break the flavor symmetry of the leptonic sector. In that problem set we argued that the flavor symmetry is SU(2)$_L\times$SU(2)$_E$. Under a rotation by this symmetry, the particle transform as:
+%\begin{align}
+%	L^i &\to \left(U_L\right)^i_{\phantom{i}j} L^j
+%	&
+%	\bar E^{j'} &\to \left(U_E\right)^{j'}_{\phantom{j'}k'} \bar E^{k'} \ .
+%\end{align}
+%Here the transformations $U$ are SU(2) rotations. In this problem, we're going to fix and finish that problem. 
+%
+%Assume that $y_{ij'}$ is an arbitrary $2\times 2$ complex matrix. By performing SU(2)$_L\times$SU(2)$_E$ rotation, the Yukawa coupling transforms as:
+%\begin{align}
+%	L^i y_{ij'}\bar E^{j'} 
+%	\to 
+%	L^i (U_L)^k_{\phantom k i} y_{k\ell'} (U_E)^{\ell'}_{\phantom{\ell'} j'} E^{j'} \ ,
+%\end{align}
+%in other words, 
+%\begin{align}
+%	y_{ij'} \to (U_L)^k_{\phantom k i} y_{k\ell'} (U_E)^{\ell'}_{\phantom{\ell'} j'} \ .
+%\end{align}
+%
+
+
+\subsection{Discrete Steps toward Field Theory}
+
+Consider a series of springs, $q_i(t)$. Each spring is attached to the springs immediate to the right and left of it. The Lagrangian for such a series of springs is
+\begin{align}
+	L  = \sum_i\frac 12 m \dot q_i^2 - \sum_i \frac 12 k(q_{i+1} - q_i)^2 \ .
+\end{align}
+Recall that the from the Lagrangian, one can define an \textbf{action}, $S = \int dt \, L$. In natural units, the action is dimensionless. We know this because we've seen things like $e^{iS}$. 
+
+\subsubsection{Dimensional analysis}
+
+The mass dimension of $m$ is, unsurprisingly, +1. We write this as 
+\begin{align}
+	[m] = 1 \ ,
+\end{align}
+which means that $m$ is something we can measure in units of energy. In natural units, what is the dimension of the spring constant $k$?
+
+\subsubsection{Nearby springs}
+
+Assume that the springs are separated by some distance $\Delta x$. Let us suggestively rewrite this Lagrangian by factoring out powers of $\Delta x$.
+\begin{align}
+	L  &= 
+	\frac 12 \sum_i \Delta x \;   \frac{m}{\Delta x} \dot q_i^2 
+	- \frac 12 \sum_i \Delta x \;   \left(k\Delta x\right) \left(\frac{q_{i+1} - q_i}{\Delta x}\right)^2 
+	\\
+	&= 
+	\frac 12 \sum_i \Delta x \;   
+	\left[
+	\rho \dot q_i^2 
+	- 
+	\kappa \left(\frac{q_{i+1} - q_i}{\Delta x}\right)^2 
+	\right]
+	\\
+	&= 
+	\frac{\rho}{2} \sum_i \Delta x \;   
+	\left[
+	\dot q_i^2 
+	- 
+	\frac{\kappa}{\rho} \left(\frac{q_{i+1} - q_i}{\Delta x}\right)^2 
+	\right]
+	\label{eq:spring}
+	\ .
+\end{align}
+What are the dimensions of $\rho$ and $\kappa$ in natural units? What is the physical interpretation of $\rho$?
+
+\subsubsection{Meaning of coefficients}
+
+The ratio $(\kappa/\rho)$ is dimensionless in natural units. In more conventional units, it has dimension $(\text{length})^a(\text{time})^b$. What are $a$ and $b$? What do you think the physical significance might be?
+
+\subsubsection{Continuum limit}
+
+Now assume that $\Delta x \to 0$ so that rather than a bunch of discrete springs, we have a continuum \emph{field} of springs. This means we can take $\sum_i \Delta x \to \int\, dx$ and $q_i(t) \to q(x,t)$:
+\begin{align}
+	L &=
+	\frac{\rho}{2} \int dx \;   
+	\left[
+	\left[\partial_t q(x,t)\right]^2
+	- 
+	\frac{\kappa}{\rho} \left[\partial_x q(x,t)\right]^2 
+	\right] \ .
+\end{align}
+We can define $Q = \sqrt\rho q$ and suggestively define\footnote{This is really a choice of units for $x$ and $t$.} $c = \kappa/\rho = 1$ so that this becomes
+\begin{align}
+	L &=
+	\frac{1}{2} \int dx \;   
+	\left[
+	\left(\partial_t Q\right)^2
+	- 
+	\left(\partial_x Q\right)^2 
+	\right] 
+	=
+	\frac{1}{2} \int dx \;   
+	(\partial_\mu Q)(\partial^\mu Q) \ .
+\end{align}
+This means that the dimensionless action is
+\begin{align}
+	S = \int dt L = \frac 12 \int dx\, dt \; (\partial Q)^2 \ .
+\end{align}
+What is the mass dimension (in natural units) of the \textbf{field} $Q$? From dimensional analysis, how fast do ripples in this medium travel?
+
+\newpage
+
+\appendix
+\vspace{1em}
+{\Large\textbf{Extra Credit}}
+
+\subsection{Where is the ninth gluon?}
+
+In problem \ref{sec:gluon} we argued that gluons carry color and anti-color. Since there are three colors, one expects there to be nine different gluons. However, the theory only gives us eight. 
+
+The matrices $T^M$ are $3\times 3$, traceless, Hermitian matrices. Argue that there are only eight linearly independent matrices satisfying these conditions. Which linear combination of color/anti-color pairs is excluded?
+
+
+
+\subsection{The difference between SU(2) and SU(3)}
+
+Recall that in the leptonic electroweak theory, SU(2) gave us a handy tensor $\varepsilon_{a b}$ and its inverse $\varepsilon^{ab}$ to convert between upper and lower indices without having to Hermitian conjugate. Thus we could write things like 
+\begin{align}
+	\langle H^a \rangle \varepsilon_{ab} = 
+	\begin{pmatrix}
+		v/\sqrt{2}
+		\\
+		0
+	\end{pmatrix} \ ,
+\end{align}
+which turned out to be very important if we wanted to give mass to the upper component of an SU(2) doublet. The fact that SU(2) lets us use this tensor to convert upper and lower indices means that a particle with a fundamental (upper) index can be converted into an object with an anti-fundamental (lower) index and vice-versa. 
+
+SU(3) is very different. We no longer have the two-index $\varepsilon_{ab}$. Instead, we have the three-index $\varepsilon_{\ell m n}$. In this case, a particle with one upper color index can be converted into an object with how many lower color indices?
+
+An object with one color index has three components. Using the fact that $\varepsilon_{\ell m n}$ is totally antisymmetric in its components, show that there are still just `three components' worth of data in the lower-indices version of this object, even though in that form it contains more than one index.
+
+
+
+
+\subsection{Propagator}
+
+Look back at (\ref{eq:spring}). We know that in quantum mechanics, $e^{iS}$ is something like a probability distribution function. We saw that it is a weight for each amplitude. This is quite analogous to homework 4 where we talked about probability distribution functions of the form
+\begin{align}
+	Z =\int dq_1 \cdots dq_N \,e^{\vec q^T \textbf{A} \vec q}  \ .
+\end{align}
+In homework 4, we found that the correlation between one point $q_i$ and another point $q_j$ is proportional to 
+\begin{align}
+	\langle q_i q_j \rangle = \mathbf{A}_{ij}^{-1} \ .
+	\label{eq:Green}
+\end{align}
+Observe that $e^{iS}$ with (\ref{eq:spring}) is very similar to the integrand of the partition function, $Z$. In a few sentences, comment on the difference between the meaning of the $x$ and $t$ variables compared to the $q_i$ variables. 
+
+\textsc{Remark}: It is common to confuse $dx$ and $dq$, but these stand for completely different things. One of these is an index that tells you which spring you're looking at. The other is the actual displacement of the spring.
+
+\textsc{Remark}: When we passed from a discrete set of springs to a continuum field, we also passed from a matrix $A$ to a differential operator. The ``inverse'' of a differential operator is called a \textbf{Green's function}. These are the continuum version of (\ref{eq:Green}) and will be the things that tell us about how particles propagate.
+
+
+%\appendix
+%\vspace{1em}
+%{\Large\textbf{Extra Credit}}
+%
+%\subsection{Error analysis and dimensional analysis}
+%
+%Consider the `high school' level problem of finding the time it takes for an object to reach the ground after being dropped from rest at height $h$. Assume everything is human scale and on the surface of the Earth so that the zeroth order solution is $t_0 = \sqrt{2h/g}$. Estimate the size of the correction from special relativity. If you need a hint, this problem came from ``Dimensional analysis, falling bodies, and the fine art of not solving differential equations'' by Craig Bohren\footnote{\emph{Am. J. Phys.} \textbf{72}  4 , April 2004 \url{http://dx.doi.org/10.1119/1.1574042}}. 
+
+%\textsc{Hint}: 
+
+
+
+\end{document}
