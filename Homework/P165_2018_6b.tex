@@ -1,0 +1,293 @@
+\documentclass[12pt]{article}
+%% arXiv paper template by Flip Tanedo
+%% last updated: Dec 2016
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  THE USUAL PACKAGES  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{nopageno}
+\usepackage{enumerate}
+\usepackage{parskip}
+\usepackage{framed}
+%\usepackage{bbm} 
+\usepackage[normalem]{ulem}
+
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  PAGE FORMATTING and (RE)NEW COMMANDS  %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[margin=2cm]{geometry}   % reasonable margins
+
+\graphicspath{{figures/}}	        % set directory for figures
+
+% for capitalized things
+\newcommand{\acro}[1]{\textsc{\MakeLowercase{#1}}}    
+
+%\numberwithin{equation}{section}    % set equation numbering
+\renewcommand{\tilde}{\widetilde}   % tilde over characters
+%\renewcommand{\vec}[1]{\mathbf{#1}} % vectors are boldface
+
+\newcommand{\dbar}{d\mkern-6mu\mathchar'26}    % for d/2pi
+\newcommand{\ket}[1]{\left|#1\right\rangle}    % <#1|
+\newcommand{\bra}[1]{\left\langle#1\right|}    % |#1>
+\newcommand{\Xmark}{\text{\sffamily X}}        % cross out
+
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+
+
+% Commands for temporary comments
+\newcommand{\comment}[2]{\textcolor{red}{[\textbf{#1} #2]}}
+\newcommand{\flip}[1]{{\color{red} [\textbf{Flip}: {#1}]}}
+\newcommand{\email}[1]{\texttt{\href{mailto:#1}{#1}}}
+
+\newenvironment{institutions}[1][2em]{\begin{list}{}{\setlength\leftmargin{#1}\setlength\rightmargin{#1}}\item[]}{\end{list}}
+
+
+\usepackage{fancyhdr}		% to put preprint number
+
+
+
+% Commands for listings package
+%\usepackage{listings}      % \begin{lstlisting}, for code
+%
+% \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+%    sets style to small true-type
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%  HYPERREF  %%%%
+%%%%%%%%%%%%%%%%%%%
+
+%% This package has to be at the end; can lead to conflicts
+\usepackage{microtype}
+\usepackage[
+	colorlinks=true,
+	citecolor=black,
+	linkcolor=black,
+	urlcolor=green!50!black,
+	hypertexnames=false]{hyperref}
+
+
+
+
+
+\begin{document}
+
+
+\begin{center}
+
+    {\Large \textsc{Long HW 6}:
+    \textbf{Putting it all together}}
+    
+\end{center}
+
+\vskip .4cm
+
+\noindent
+\begin{tabular*}{\textwidth}{rl}
+	\textsc{Course:}& Physics 165, \emph{Introduction to Particle Physics} (2018)
+	\\
+	\textsc{Instructor:}& Prof. Flip Tanedo (\email{flip.tanedo@ucr.edu})
+	\\
+	\textsc{Due by:}& \textbf{Tuesday}, February 20 
+\end{tabular*}
+
+\noindent
+This is the main weekly homework set. Unless otherwise stated, give all responses in natural units where $c = \hbar = 1$ and energy is measured in electron volts (usually MeV or GeV). 
+
+Recall that a Lagrangian Density (``Lagrangian'' from now on) is a function $\mathcal L(x)$ that is integrated over spacetime to give the action, $S$:
+\begin{align}
+	S = \int d^4x \mathcal L(x) \ .
+\end{align}
+In fact, to be precise, $\mathcal L$ is a \emph{functional} of the \textbf{fields} in your theory, $\mathcal L[\varphi(x), \cdots]$. The quadratic part of the Lagrangian is special because it can be solved exactly to derive the \textbf{propagator} of a particle. 
+
+
+
+%\subsection{Spring Theory}
+%
+%In class we wrote down the Lagrangian for an infinite array of beads connected to their nearest neighbors by springs:
+%\begin{align}
+%	L = \frac 12 \sum_i \Delta x
+%	\left[
+%	{\dot q}_i^2 - \left(\frac{q_{i+1}-q_i}{\Delta x}\right)^2 
+%	\right] \ ,
+%\end{align}
+%where we've chosen units to fix the relative prefactor. In the continuum limit, the bracketed turns into $(\partial q)^2$. The beads may have had some mass $m_\text{bead}$, but those got absorbed into our choice of units. 
+%
+%\subsubsection{Dimensional Analysis}
+%
+%Assume that the springs live in a three-dimensional array. That is to say, they live in four-dimensional spacetime. 
+%
+%\subsection{Lagrangian Densities}
+
+
+
+\subsection{Why the mass term is a mass}
+
+In class we wrote down the Lagrangian for an infinite array of beads connected to their nearest neighbors by springs:
+\begin{align}
+	L = \frac 12 \sum_i \Delta x
+	\left[
+	\frac{m_\text{bead}}{\Delta x}
+	{\dot q}_i^2 
+	- 
+	k\Delta x
+	\left(\frac{q_{i+1}-q_i}{\Delta x}\right)^2 
+	\right] \ ,
+\end{align}
+we then `chose units' so that this became
+\begin{align}
+	L &= \frac 12 \sum_i \Delta x
+	\left[
+	{\dot q}_i^2 - \left(\frac{q_{i+1}-q_i}{\Delta x}\right)^2 
+	\right]  
+	\quad\to\quad \int dx \, \frac{1}{2} (\partial q)^2 \ .
+\end{align}
+We identify $\mathcal L[q] = (\partial q)^2/2$.
+In the case of a (3+1)-dimensional spacetime, we this generalizes to
+\begin{align}
+	S = \int dt \,d^3x\, \mathcal L = \int d^4x \, \frac 12 (\partial q)^2 \ .
+\end{align}
+We propose adding another term to the Lagrangian,
+\begin{align}
+	\Delta \mathcal L = - \frac 12 A q^2 \ .
+\end{align}
+
+\subsubsection{Dimensional Analysis}
+In this class, `dimension' means ``mass dimension.'' For example, an energy $E$ has dimension 1, while a length $\mathcal\ell$ has dimension $-1$. The notation for this is
+\begin{align}
+	[E] &=1 & [\ell] &=-1 \ .
+\end{align} 
+This just means that you can write a quantity $x$ as a number times $\text{GeV}^{[x]}$. 
+
+\begin{enumerate}
+	\item[(a)] Given that $[S]=0$, what is the dimension of $\mathcal L$?
+	\item[(b)] What is the dimension of the field $q$?
+	\item[(c)] What is the dimension of the coefficient $A$?
+\end{enumerate}
+
+\subsubsection{What is mass?}
+
+Write $A$ as some mass scale $m$ to the appropriate power. We want to identify $m$ with the mass of a quantum excitation. The equation of motion for
+\begin{align}
+	\mathcal L = \frac 12\left(\partial q\right)^2 - \frac 12 A q^2 \ ,
+\end{align}
+is simply
+\begin{align}
+	(-\partial^2 - A) q = 0 \ .
+\end{align}
+To understand what this means, make the ansatz that $q$ is a plane wave of definite momentum, $q(x)\propto \exp(ip^\mu x_\mu)$. Show that the equation of motion then implies that $m$ is identified with the `mass' of the plane wave. \textsc{Hint}: use the Einstein relation for an on-shell particle.
+
+
+
+\subsection{Mixed Mass}
+
+Consider the following quadratic Lagrangian written in terms of fields $\varphi_1(x)$ and $\varphi_2(x)$.
+\begin{align}
+	\mathcal L[\varphi_1, \varphi_2] &=
+	\frac{1}{2}\left(\partial_\mu\varphi_1\right)
+	\left(\partial^\mu\varphi_2\right)
+	+
+	\frac{1}{2}\left(\partial_\mu\varphi_2\right)
+	\left(\partial^\mu\varphi_2\right)
+	- \frac 12 m^2\varphi_1\varphi_2 \ .
+\end{align}
+Observe that the mass term connects a $\varphi_1$ and a $\varphi_2$ field. This means that these field mix with one another. We are free to redefine fields. Show that the following redefinition diagonalizes the quadratic Lagrangian above; that is: each term contains only one type of field.
+\begin{align}
+	\varphi_1(x) &= \frac{1}{\sqrt{2}}\left(\varphi_A(x) + \varphi_B(x) \right)
+	\\
+	\varphi_2(x) &= \frac{1}{\sqrt{2}}\left(\varphi_A(x) - \varphi_B(x) \right)
+\end{align}
+What is the mass-squared of the $\varphi_A$ field? What is strange about the mass-squared of the $\varphi_B$ field?
+
+\subsection{Negative mass-squared}
+
+A field that has a negative value for $m^2$ is problematic. That would imply that the mass is imaginary. Not good. We need to make sense of this. Assume you have the following Lagrangian:
+\begin{align}
+	\mathcal L[\varphi] &=
+	\frac{1}{2}\left( \partial_\mu\varphi\right)\left(\partial^\mu \varphi\right) - V[\varphi]
+	&
+	V[\varphi] &=
+	-\frac{1}{2} m^2 \varphi^2 + \frac{\lambda}{4} \varphi^4 \ .
+\end{align}
+Here $V[\varphi]$ is called the \textbf{potential} of the field $\varphi$. It gives the potential energy of a [classical] field configuration.
+\begin{enumerate}
+	\item[(a)] Plot the potential $V[\varphi]$ as a function of $\varphi$.
+	\item[(b)] For what value(s) of $\varphi$ is $V[\varphi]$ minimized? Call these values $\pm\varphi_0$. These are just some spacetime-independent constants.
+	\item[(c)] The problem with the field $\varphi(x)$ is that excitations of the field are not being expanded about the minimum energy (potential) configuration. Instead, define a shifted field $\phi(x)$ by $\varphi(x) = \varphi_0 + \phi(x)$. Expand $V[\varphi_0 + \phi(x)]$, show that the $\phi(x)$ field has a positive mass-squared term. What is the mass of the $\phi$ particle?
+\end{enumerate}
+The lesson here is that in the absence of excitations, the field wants to take values $\varphi(x) = \varphi_0$. This is the constant value that minimized the potential. Quantum excitations of the field are `wiggles' on top of this background value.
+
+The background value, $\varphi_0$ is called the \textbf{vacuum expectation value} of $\varphi(x)$ and is often written $\langle \varphi \rangle = \varphi_0$. An analog of this is precisely whats happening with the Higgs field. 
+
+
+
+\subsection{Reading}
+
+Read the article ``Particle Physics and the Standard Model'' by Raby, Slansky, and West in \emph{Particle Physics: A Los Alamos Primer}\footnote{\url{https://archive.org/details/ParticlePhysicsAndTheStandardModel}}. This should be a nice, enjoyable article that contextualizes our discussions so far. Answer the following question: Let $g$ be the coupling of the weak bosons ($W^A$) and $g'$ be the coupling of the hypercharge boson ($B$). If I doubled $g$, what happens to the size of the photon coupling, $e$? What happens to the mass of the $W$ boson? You do not have to read in thorough detail, but we will come back to this article soon.
+
+
+
+\appendix
+\vspace{1em}
+{\Large\textbf{Extra Credit}}
+
+
+
+
+
+
+\subsection{Dimensional analysis: propagator to long-range force}
+
+The propagator of an intermediate, massless particle with momentum $p$ is
+\begin{align}
+	\Delta(p) = \frac{1}{p^2 - m^2} \ .
+\end{align}
+(We're dropping factors of $\pm i$ that are not our concern for this course.) Draw the Feynman diagrams for an electron with momentum $p_1$ and a positron with momentum $p_2$ scattering into an electron with momentum $k_1$ and a positron with momentum $k_2$,
+\begin{align}
+	e^-(p_1) + e^+(p_2) \to e^-(k_1) + e^+(k_2) \ .
+\end{align} 
+Write down the propagator for the internal line for each of these diagrams. 
+\begin{enumerate}
+	\item[(a)] Can either of the denominators ever be zero?
+	\item[(b)] One of these diagrams represents the \emph{long range} electric force of the electron and positron acting on one another. Based on the interpretation of the Feynman diagram as a spacetime trajectory, which diagram represents the long range force?
+	\item[(c)] Let $q = p_1 - k_1$ be the exchanged 4-momentum between the electron and positron. The long range potential $V(r)$ between the two particles is given by the spatial Fourier transform of the amplitude $V(\mathbf{r})\sim\int d^3\mathbf{q} \exp\left(\textbf{q}\cdot \textbf{r}\right) \mathcal M$. Assuming that $\mathcal M$ is simply the propagator of the diagram encoding the long-range force, what is the $r$ dependence of the potential? Don't calculate, just use dimensional analysis. 
+\end{enumerate}
+
+
+\subsection{Reading}
+
+Read the article ``Lecture Notes: from simple field theories to the standard model'' by Slansky in \emph{Particle Physics: A Los Alamos Primer}\footnote{\url{library.lanl.gov/cgi-bin/getfile?11-03.pdf}}. Based on the discussion in lecture 8, does the electron have a bigger Yukawa coupling or a smaller Yukawa coupling than the muon? (The Yukawa is what Slansky calls $G_Y$.) You do not have to read in thorough detail, but we will come back to this article soon.
+
+%\appendix
+%\vspace{1em}
+%{\Large\textbf{Extra Credit}}
+%
+%\subsection{Error analysis and dimensional analysis}
+%
+%Consider the `high school' level problem of finding the time it takes for an object to reach the ground after being dropped from rest at height $h$. Assume everything is human scale and on the surface of the Earth so that the zeroth order solution is $t_0 = \sqrt{2h/g}$. Estimate the size of the correction from special relativity. If you need a hint, this problem came from ``Dimensional analysis, falling bodies, and the fine art of not solving differential equations'' by Craig Bohren\footnote{\emph{Am. J. Phys.} \textbf{72}  4 , April 2004 \url{http://dx.doi.org/10.1119/1.1574042}}. 
+
+%\textsc{Hint}: 
+
+
+
+\end{document}
